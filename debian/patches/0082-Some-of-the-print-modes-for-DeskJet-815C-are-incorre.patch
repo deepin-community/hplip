@@ -8,10 +8,10 @@ Subject: Some of the print modes for DeskJet 815C are incorrectly defined
  2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/prnt/drv/hpcups.drv.in b/prnt/drv/hpcups.drv.in
-index 0d5a6a2..81155fd 100644
+index da7a4c0..dd91b0b 100644
 --- a/prnt/drv/hpcups.drv.in
 +++ b/prnt/drv/hpcups.drv.in
-@@ -21655,7 +21655,7 @@ Group "RLT/HP Real Life Technologies"
+@@ -21719,7 +21719,7 @@ Group "RLT/HP Real Life Technologies"
      Choice "DraftRGB/Draft Color" "<</cupsColorSpace 1/cupsBitsPerColor 8/cupsRowStep 0/OutputType(-1)/cupsString0(PlainDraftColor)/HWResolution[300 300]>>setpagedevice"
      Choice "DraftGray/Draft Grayscale" "<</cupsColorSpace 1/cupsBitsPerColor 8/cupsRowStep 2/OutputType(-1)/cupsString0(PlainDraftGrayK)/HWResolution[300 300]>>setpagedevice"
      //Choice "BestGray/Best Grayscale" "<</cupsColorSpace 1/cupsBitsPerColor 8/cupsRowStep 2/cupsCompression 2/HWResolution[600 600]>>setpagedevice"  // black only

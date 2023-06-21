@@ -10,7 +10,7 @@ LP: #1245578
  2 files changed, 48 insertions(+), 11 deletions(-)
 
 diff --git a/scan/sane/bb_ledm.c b/scan/sane/bb_ledm.c
-index e68fd0c..b5d57d6 100644
+index 4b18af8..168a6ab 100644
 --- a/scan/sane/bb_ledm.c
 +++ b/scan/sane/bb_ledm.c
 @@ -189,7 +189,7 @@ Keep-Alive: 20\r\nProxy-Connection: keep-alive\r\nCookie: AccessCounter=new\r\n0

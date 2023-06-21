@@ -579,7 +579,7 @@ class Ui_HpScan(object):
         if self.blank_page.isChecked() == True:
             cmd = cmd + ' --' + 'blankpage'
         if self.document_merge_adf_flatbed.isChecked() == True:
-            cmd = cmd + ' --' + 'adf_fladbed_merge'
+            cmd = cmd + ' --' + 'adf_flatbed_merge'
         if self.image_enhancement.isChecked() == True and self.brightness == True:
             cmd = cmd + ' --' + 'brightness' + '=' + str(self.sizel1)
         if self.image_enhancement.isChecked() == True and self.contrast == True:
@@ -671,7 +671,7 @@ class Ui_HpScan(object):
     def comboBox_SourceChanged(self,device):
         supported_PageSizes =[]
         for x in PAGE_SIZES:
-            if PAGE_SIZES[x][0]<self.devicelist[self.device_uri][1] and PAGE_SIZES[x][1]<self.devicelist[self.device_uri][2]:
+            if PAGE_SIZES[x][0]<=self.devicelist[self.device_uri][1] and PAGE_SIZES[x][1]<=self.devicelist[self.device_uri][2]:
                 supported_PageSizes.append(x)
         self.comboBox_Papersize.clear()
         self.comboBox_Papersize.addItems(supported_PageSizes)

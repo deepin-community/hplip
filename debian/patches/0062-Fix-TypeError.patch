@@ -61,14 +61,14 @@ index 4beb2e9..19b2ce5 100644
          if self.dev is not None:
              self.dev.close()
 diff --git a/ui5/wifisetupdialog.py b/ui5/wifisetupdialog.py
-index bbfc89a..e735650 100644
+index 7fde180..e735650 100644
 --- a/ui5/wifisetupdialog.py
 +++ b/ui5/wifisetupdialog.py
 @@ -253,7 +253,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
              try:
                  self.dev = device.Device(self.device_uri)
              except Error as e:
--                FailureUI(self, self.__tr("<b>Error opening device:</b><p>%s</p><p>(%s)</p>") %(self.device_uri, str(e[0])))
+-                FailureUI(self, self.__tr("<b>Error opening device:</b><p>%s</p><p>(%s)</p>") %(self.device_uri, str(e)))
 +                FailureUI(self, self.__tr("<b>Error opening device:</b><p>%s</p><p>(%s)</p>") %(self.device_uri, str(e.msg)))
  
                  if self.dev is not None:
@@ -77,7 +77,7 @@ index bbfc89a..e735650 100644
  
  
      def showIOError(self, e):
--        FailureUI(self, self.__tr("<b>An I/O error occurred.</b><p>Please check the USB connection to your printer and try again.</p>(%s)" % str(e[0])))
+-        FailureUI(self, self.__tr("<b>An I/O error occurred.</b><p>Please check the USB connection to your printer and try again.</p>(%s)" % str(e)))
 +        FailureUI(self, self.__tr("<b>An I/O error occurred.</b><p>Please check the USB connection to your printer and try again.</p>(%s)" % str(e.msg)))
  
          if self.dev is not None:

@@ -59,7 +59,7 @@ index 9b06cf8..45a0c7a 100644
      memcpy(&cups_header, firstpage_cups_header, sizeof(cups_page_header2_t));
  
 diff --git a/protocol/hp_ipp.c b/protocol/hp_ipp.c
-index af7013b..21e0699 100644
+index 97d827d..e8c9b81 100644
 --- a/protocol/hp_ipp.c
 +++ b/protocol/hp_ipp.c
 @@ -941,7 +941,7 @@ enum HPMUD_RESULT readChannel(raw_ipp *responseptr, HPMUD_DEVICE hd, HPMUD_CHANN

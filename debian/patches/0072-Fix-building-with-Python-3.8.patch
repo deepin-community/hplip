@@ -48,10 +48,10 @@ index 907bcfd..e293b44 100644
  hpmudext_la_CFLAGS = -I$(PYTHONINCLUDEDIR)
  hpmudext_la_LIBADD = libhpmud.la
 diff --git a/configure.in b/configure.in
-index 722f7fa..af13e57 100644
+index f67d465..1ca12ac 100644
 --- a/configure.in
 +++ b/configure.in
-@@ -650,7 +650,9 @@ if test "$class_driver" = "no" && test "$hpijs_only_build" = "no" && test "$lite
+@@ -652,7 +652,9 @@ if test "$class_driver" = "no" && test "$hpijs_only_build" = "no" && test "$lite
     PYTHONINCLUDEDIR=`$PYTHON -c "from distutils.sysconfig import get_python_inc; print (get_python_inc());"`
     AC_MSG_RESULT("using $PYTHONINCLUDEDIR ....  python${PYTHON_VERSION}/Python.h")
     AC_ARG_VAR(PYTHONINCLUDEDIR, [path to Python.h C header file])
@@ -62,7 +62,7 @@ index 722f7fa..af13e57 100644
            [FOUND_HEADER=yes; break;])
  
     if test "x$FOUND_HEADER" != "xyes"; then
-@@ -663,6 +665,7 @@ if test "$class_driver" = "no" && test "$hpijs_only_build" = "no" && test "$lite
+@@ -665,6 +667,7 @@ if test "$class_driver" = "no" && test "$hpijs_only_build" = "no" && test "$lite
     
     AS_IF([test "x$FOUND_HEADER" != "xyes"],
            [AC_MSG_ERROR([cannot find python-devel support], 6)])

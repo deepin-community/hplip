@@ -387,7 +387,7 @@ index 7957446..491f168 100644
  
  
 diff --git a/ui5/fabwindow.py b/ui5/fabwindow.py
-index 488b6bb..0b95c94 100644
+index 19f76f7..2b29c2d 100644
 --- a/ui5/fabwindow.py
 +++ b/ui5/fabwindow.py
 @@ -344,7 +344,7 @@ class FABWindow(QMainWindow,  Ui_MainWindow):
@@ -440,10 +440,10 @@ index cf22064..e3c2a02 100644
                          sts, out = utils.run("sh %s"%smart_install_run)
  
 diff --git a/ui5/setupdialog.py b/ui5/setupdialog.py
-index f3f5cc9..6cb2b94 100644
+index 7b58d80..64e3370 100644
 --- a/ui5/setupdialog.py
 +++ b/ui5/setupdialog.py
-@@ -888,7 +888,7 @@ class SetupDialog(QDialog, Ui_Dialog):
+@@ -884,7 +884,7 @@ class SetupDialog(QDialog, Ui_Dialog):
                                   self.windowTitle(),
                                   warn_text,
                                   QMessageBox.Yes|\
@@ -452,7 +452,7 @@ index f3f5cc9..6cb2b94 100644
                                   QMessageBox.NoButton) == QMessageBox.Yes ):
                  i = 2
                  while True:
-@@ -1151,7 +1151,7 @@ class SetupDialog(QDialog, Ui_Dialog):
+@@ -1147,7 +1147,7 @@ class SetupDialog(QDialog, Ui_Dialog):
                      if QMessageBox.critical(self,
                                             self.windowTitle(),
                                             error_text,
@@ -461,7 +461,7 @@ index f3f5cc9..6cb2b94 100644
                                             QMessageBox.Cancel | QMessageBox.Escape,
                                             QMessageBox.NoButton) == QMessageBox.Cancel:
                          break
-@@ -1181,7 +1181,7 @@ class SetupDialog(QDialog, Ui_Dialog):
+@@ -1177,7 +1177,7 @@ class SetupDialog(QDialog, Ui_Dialog):
                                  if QMessageBox.critical(self,
                                                         self.windowTitle(),
                                                         error_text,

@@ -8,7 +8,7 @@ Subject: In hp-scan's manpage, sort PAGE_SIZES in help,
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scan.py b/scan.py
-index b15a829..c82ce58 100755
+index 864ef2b..0b24e36 100755
 --- a/scan.py
 +++ b/scan.py
 @@ -290,7 +290,7 @@ try:

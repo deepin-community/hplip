@@ -11,7 +11,7 @@ Thanks to Aurelien Gateau for this patch.
  1 file changed, 4 insertions(+), 21 deletions(-)
 
 diff --git a/ui5/systemtray.py b/ui5/systemtray.py
-index 5b69d2b..8888dec 100644
+index 28078cf..e64d2c5 100644
 --- a/ui5/systemtray.py
 +++ b/ui5/systemtray.py
 @@ -442,30 +442,13 @@ class SystemTrayApp(QApplication):

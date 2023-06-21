@@ -9,7 +9,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-use-binary-
  2 files changed, 5 insertions(+), 8 deletions(-)
 
 diff --git a/base/utils.py b/base/utils.py
-index e444bd9..9ce92df 100644
+index bfe985c..880a9b5 100644
 --- a/base/utils.py
 +++ b/base/utils.py
 @@ -958,10 +958,7 @@ else:
