@@ -1,8 +1,23 @@
-hplip (3.22.4+dfsg0-1) UNRELEASED; urgency=medium
+hplip (3.22.10+dfsg0-2) unstable; urgency=medium
 
-  * update
+  * rework patch that uses distro module (0075 at the moment)
+    Thanks to Mark Hindley and others for detecting and fixing this!
+    (Closes: #1010805, #1029459, #1030043, #1031233, #1031784)
 
- -- Debian Printing Team <debian-printing@lists.debian.org>  Thu, 19 May 2022 10:10:10 +0800
+ -- Thorsten Alteholz <debian@alteholz.de>  Sat, 05 Mar 2023 00:39:02 +0100
+
+hplip (3.22.10+dfsg0-1) unstable; urgency=medium
+
+  * Update to new upstream version 3.22.10+dfsg0.
+  * (the next upload with updated/new patches will follow soon)
+
+ -- Thorsten Alteholz <debian@alteholz.de>  Sun, 15 Jan 2023 11:39:02 +0100
+
+hplip (3.22.6+dfsg0-1) unstable; urgency=medium
+
+  * Update to new upstream version 3.22.6+dfsg0.
+
+ -- Thorsten Alteholz <debian@alteholz.de>  Tue, 16 Aug 2022 01:27:10 +0000
 
 hplip (3.22.4+dfsg0-1) unstable; urgency=medium
 

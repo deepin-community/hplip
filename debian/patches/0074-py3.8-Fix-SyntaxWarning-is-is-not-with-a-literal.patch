@@ -11,7 +11,7 @@ Closes: #955168
  4 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/base/utils.py b/base/utils.py
-index 9ce92df..ca6d82f 100644
+index 880a9b5..cfa495f 100644
 --- a/base/utils.py
 +++ b/base/utils.py
 @@ -2059,7 +2059,7 @@ def chunk_write(response, out_fd, chunk_size =8192, status_bar = downLoad_status

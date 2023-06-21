@@ -9,7 +9,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-check-cups.
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/installer/core_install.py b/installer/core_install.py
-index 2b46550..ccdd8f1 100644
+index f56965a..5b3059e 100644
 --- a/installer/core_install.py
 +++ b/installer/core_install.py
 @@ -362,9 +362,9 @@ class CoreInstall(object):

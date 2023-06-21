@@ -8,7 +8,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-3165-source
  1 file changed, 1 insertion(+)
 
 diff --git a/scan.py b/scan.py
-index 86b7fc2..af4ae23 100755
+index 90cb6aa..bf9837c 100755
 --- a/scan.py
 +++ b/scan.py
 @@ -966,6 +966,7 @@ try:

@@ -9,7 +9,7 @@ LP: #539015
  2 files changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/base/utils.py b/base/utils.py
-index 885539b..f97ed44 100644
+index 94d5c8c..c9daa62 100644
 --- a/base/utils.py
 +++ b/base/utils.py
 @@ -567,18 +567,21 @@ class UserSettings(object): # Note: Deprecated after 2.8.8 in Qt4 (see ui4/ui_ut

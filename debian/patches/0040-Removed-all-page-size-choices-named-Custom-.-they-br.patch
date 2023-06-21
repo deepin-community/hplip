@@ -13,7 +13,7 @@ Made with:
  2 files changed, 12 deletions(-)
 
 diff --git a/prnt/drv/hpcups.drv.in.template b/prnt/drv/hpcups.drv.in.template
-index 7a7a06e..9dddc2b 100644
+index 425a833..e3f0100 100644
 --- a/prnt/drv/hpcups.drv.in.template
 +++ b/prnt/drv/hpcups.drv.in.template
 @@ -4130,8 +4130,6 @@ Manufacturer "HP"
@@ -25,7 +25,7 @@ index 7a7a06e..9dddc2b 100644
  		 
        CustomMedia "Env10/#10 Envelope 4.125x9.5in" 297 684 8.4 8.4 8.4 8.4 "<</cupsInteger0 81/PageSize[297 684]/ImagingBBox null>>setpagedevice"
               "<</cupsInteger0 81/PageSize[297 684]/ImagingBBox null>>setpagedevice"
-@@ -10458,10 +10456,6 @@ Manufacturer "HP"
+@@ -10470,10 +10468,6 @@ Manufacturer "HP"
           "<</cupsInteger0 45/PageSize[515.76 728.4]/ImagingBBox null>>setpagedevice"
        CustomMedia "JB5.FB/Borderless JB5" 515.76 728.4 0 0 0 0 "<</cupsInteger0 45/PageSize [515.76 728.4]/ImagingBBox null>>setpagedevice"
           "<</cupsInteger0 45/PageSize[515.76 728.4]/ImagingBBox null>>setpagedevice"
@@ -36,7 +36,7 @@ index 7a7a06e..9dddc2b 100644
        CustomMedia "Envelope#10/Envelope #10" 296.88 684 8.4 8.4 8.4 8.4 "<</cupsInteger0 81/PageSize [296.88 684]/ImagingBBox null>>setpagedevice"
           "<</cupsInteger0 81/PageSize[612 1008]/ImagingBBox null>>setpagedevice"
        CustomMedia "EnvelopeA2/Envelope A2" 314.88 414 8.4 8.4 8.4 8.4 "<</cupsInteger0 109/PageSize [314.88 414]/ImagingBBox null>>setpagedevice"
-@@ -12480,8 +12474,6 @@ Manufacturer "HP"
+@@ -12528,8 +12522,6 @@ Manufacturer "HP"
           "<</cupsInteger0 2/PageSize[612 1008]/ImagingBBox null>>setpagedevice"
        CustomMedia "Statement/Statement " 396 612 8.4 8.4 8.4 8.4 "<</cupsInteger0 15/PageSize[396 612]/ImagingBBox null>>setpagedevice"
           "<</cupsInteger0 15/PageSize[396 612]/ImagingBBox null>>setpagedevice"

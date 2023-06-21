@@ -80,3 +80,4 @@
 0080-Workaround-Add-32-bytes-to-allocation-Compressor.patch
 0081-Don-t-start-hp-systray-in-GNOME.patch
 0082-Some-of-the-print-modes-for-DeskJet-815C-are-incorre.patch
+0083-add-format-string-to-snprintf.patch

@@ -10,10 +10,10 @@ Subject: Add 'include <cups/ppd.h>' in various places as CUPS 2.2 moved some
  3 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/configure.in b/configure.in
-index 5b08735..722f7fa 100644
+index 16de354..f67d465 100644
 --- a/configure.in
 +++ b/configure.in
-@@ -618,7 +618,7 @@ fi
+@@ -620,7 +620,7 @@ fi
  
  if test "$class_driver" = "no" && test "$hpijs_only_build" = "no" && test "$hpcups_only_build" = "no"; then
     AC_CHECK_LIB([cups], [cupsDoFileRequest], [LIBS="$LIBS"], [AC_MSG_ERROR([cannot find libcups support], 9)])

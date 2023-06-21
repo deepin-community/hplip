@@ -8,7 +8,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-dj990c-marg
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/prnt/drv/hpcups.drv.in b/prnt/drv/hpcups.drv.in
-index 96d0898..0d5a6a2 100644
+index 20b5254..da7a4c0 100644
 --- a/prnt/drv/hpcups.drv.in
 +++ b/prnt/drv/hpcups.drv.in
 @@ -1486,9 +1486,9 @@ Manufacturer "HP"

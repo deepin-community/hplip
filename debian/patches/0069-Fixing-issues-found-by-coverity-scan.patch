@@ -76,7 +76,7 @@ index e7c5085..28abbd8 100644
  #include <sys/stat.h>
  #include <errno.h>
 diff --git a/io/hpmud/hpmud.c b/io/hpmud/hpmud.c
-index 5977d7d..f0c2687 100644
+index a6c100f..b0a5a08 100644
 --- a/io/hpmud/hpmud.c
 +++ b/io/hpmud/hpmud.c
 @@ -759,6 +759,7 @@ enum HPMUD_RESULT hpmud_get_dstat(HPMUD_DEVICE dd, struct hpmud_dstat *ds)
@@ -280,7 +280,7 @@ index 245e798..03f6da5 100644
  
  # endif //_IPP_H
 diff --git a/scan/sane/bb_ledm.c b/scan/sane/bb_ledm.c
-index b5d57d6..3f554e1 100644
+index 168a6ab..4bdb304 100644
 --- a/scan/sane/bb_ledm.c
 +++ b/scan/sane/bb_ledm.c
 @@ -26,6 +26,7 @@
