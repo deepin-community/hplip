@@ -1,8 +1,8 @@
-hplip (3.22.10+dfsg0-4deepin1) unstable; urgency=medium
+hplip (3.22.10+dfsg0-5) unstable; urgency=medium
 
-  * No source change upload to rebuild with python 3.12
+  * take care of implicit function declarations (Closes: #1066348)
 
- -- Tianyu Chen <sweetyfish@deepin.org>  Tue, 11 Jun 2024 11:04:16 +0800
+ -- Thorsten Alteholz <debian@alteholz.de>  Fri, 26 Apr 2024 23:39:02 +0200
 
 hplip (3.22.10+dfsg0-4) unstable; urgency=medium
 
