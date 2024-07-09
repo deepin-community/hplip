@@ -1,0 +1,52 @@
+diff --git a/base/g.py b/base/g.py
+index f73e23f..38d9a1d 100644
+--- a/base/g.py
++++ b/base/g.py
+@@ -128,7 +128,7 @@ class ConfigBase(object):
+             try:
+                 fp = open(self.filename, "r")
+                 try:
+-                    self.conf.readfp(fp)
++                    self.conf.read_file(fp)
+                 except configparser.MissingSectionHeaderError:
+                     print("")
+                     log.error("Found No Section in %s. Please set the http proxy for root and try again." % self.filename)
+diff --git a/ui/devmgr4.py b/ui/devmgr4.py
+index cc2552f..0d4bf5d 100644
+--- a/ui/devmgr4.py
++++ b/ui/devmgr4.py
+@@ -1227,7 +1227,7 @@ class DevMgr4(DevMgr4_base):
+ 
+             hplip_conf = ConfigParser.ConfigParser()
+             fp = open("/etc/hp/hplip.conf", "r")
+-            hplip_conf.readfp(fp)
++            hplip_conf.read_file(fp)
+             fp.close()
+ 
+             try:
+diff --git a/ui4/devmgr5.py b/ui4/devmgr5.py
+index 652e297..4beac44 100644
+--- a/ui4/devmgr5.py
++++ b/ui4/devmgr5.py
+@@ -1024,7 +1024,7 @@ class DevMgr5(QMainWindow,  Ui_MainWindow):
+ 
+                 hplip_conf = configparser.ConfigParser()
+                 fp = open("/etc/hp/hplip.conf", "r")
+-                hplip_conf.readfp(fp)
++                hplip_conf.read_file(fp)
+                 fp.close()
+ 
+                 try:
+diff --git a/ui5/devmgr5.py b/ui5/devmgr5.py
+index 7957446..50e9736 100644
+--- a/ui5/devmgr5.py
++++ b/ui5/devmgr5.py
+@@ -1074,7 +1074,7 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
+ 
+                 hplip_conf = configparser.ConfigParser()
+                 fp = open("/etc/hp/hplip.conf", "r")
+-                hplip_conf.readfp(fp)
++                hplip_conf.read_file(fp)
+                 fp.close()
+ 
+                 try:
