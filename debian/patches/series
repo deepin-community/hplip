@@ -82,3 +82,5 @@
 0082-Some-of-the-print-modes-for-DeskJet-815C-are-incorre.patch
 0083-add-format-string-to-snprintf.patch
 0084-take-care-of-implicit-declaration-of-functions.patch
+0085-python-3.12-compat.patch
+
