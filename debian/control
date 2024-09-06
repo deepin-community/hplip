@@ -272,6 +272,8 @@ Depends:
  cups-filters | ghostscript-cups,
  ${misc:Depends},
  ${shlibs:Depends},
+Recommends:
+ hplip-plugin (>= 3.22.10)[amd64 arm64],
 Suggests:
  hplip (= ${binary:Version}),
  hplip-doc,
@@ -304,6 +306,7 @@ Recommends:
  cups | hpijs-ppds,
  cups-filters | foomatic-filters,
  ghostscript,
+ hplip-plugin (>= 3.22.10)[amd64 arm64],
 Suggests:
  hpijs-ppds,
  hplip,
@@ -336,6 +339,8 @@ Architecture: any
 Depends:
  ${misc:Depends},
  ${shlibs:Depends},
+Recommends:
+ hplip-plugin (>= 3.22.10)[amd64 arm64],
 Suggests:
  hplip (>= ${binary:Version}),
 Breaks:

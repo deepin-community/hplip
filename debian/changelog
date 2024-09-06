@@ -1,3 +1,9 @@
+hplip (3.22.10+dfsg0-5deepin2) unstable; urgency=medium
+
+  * add Recommends hplip-plugin.
+
+ -- LiChengGang <lichenggang@uniontech.com>  Fri, 06 Sep 2024 09:25:16 +0800
+
 hplip (3.22.10+dfsg0-5deepin1) unstable; urgency=medium
 
   * Use read_file instead of readfp for python 3.12.
