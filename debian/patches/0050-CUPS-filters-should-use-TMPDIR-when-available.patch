@@ -8,11 +8,9 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-logdir.patc
  prnt/hpcups/SystemServices.cpp | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/prnt/hpcups/HPCupsFilter.cpp b/prnt/hpcups/HPCupsFilter.cpp
-index d972778..322bdaa 100644
 --- a/prnt/hpcups/HPCupsFilter.cpp
 +++ b/prnt/hpcups/HPCupsFilter.cpp
-@@ -669,7 +669,7 @@ int HPCupsFilter::processRasterData(cups_raster_t *cups_raster)
+@@ -666,7 +666,7 @@
      char hpPreProcessedRasterFile[MAX_FILE_PATH_LEN]; //temp file needed to store raster data with swaped pages.
  
  
@@ -21,11 +19,9 @@ index d972778..322bdaa 100644
      #ifndef DISABLE_IMAGEPROCESSOR 
  	    image_processor_t* imageProcessor=NULL;
  	    IMAGE_PROCESSOR_ERROR result;
-diff --git a/prnt/hpcups/SystemServices.cpp b/prnt/hpcups/SystemServices.cpp
-index f227837..318e539 100644
 --- a/prnt/hpcups/SystemServices.cpp
 +++ b/prnt/hpcups/SystemServices.cpp
-@@ -38,7 +38,7 @@ SystemServices::SystemServices(int iLogLevel, int job_id, char* user_name) : m_i
+@@ -38,7 +38,7 @@
      if (iLogLevel & SAVE_OUT_FILE)
      {
          char    fname[MAX_FILE_PATH_LEN];

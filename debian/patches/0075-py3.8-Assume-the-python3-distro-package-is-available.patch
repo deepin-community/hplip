@@ -8,11 +8,9 @@ Subject: =?utf-8?q?py3=2E8=3A=C2=A0Assume_the_python3-distro_package_is_ava?=
  installer/core_install.py | 33 ++++++++++++++++++++++++++++++---
  2 files changed, 37 insertions(+), 17 deletions(-)
 
-diff --git a/base/password.py b/base/password.py
-index 1071ea1..c86c844 100644
 --- a/base/password.py
 +++ b/base/password.py
-@@ -80,20 +80,13 @@ def showPasswordPrompt(prompt):
+@@ -48,20 +48,13 @@
  
  
  # TBD this function shoud be removed once distro class implemented
@@ -28,23 +26,20 @@ index 1071ea1..c86c844 100644
 -        os_name = 'manjarolinux'
 -    elif "fedora" in os_name:
 -        os_name = 'fedora'
--
--    return os_name
 +def get_distro_name():
 +    import distro
 +    return distro.linux_distribution(full_distribution_name=False)[0]
-+
+ 
+-    return os_name
 +# upstream likes to rename stuff
 +def get_distro_std_name(os_name1):
 +    return get_distro_name()
  
  
  class Password(object):
-diff --git a/installer/core_install.py b/installer/core_install.py
-index 5b3059e..eb33728 100644
 --- a/installer/core_install.py
 +++ b/installer/core_install.py
-@@ -636,8 +636,35 @@ class CoreInstall(object):
+@@ -636,8 +636,35 @@
              return ''
  
      def get_distro(self):
@@ -82,7 +77,7 @@ index 5b3059e..eb33728 100644
              found_in_list = False
              for d in self.distros:
                  if name.find(d) > -1:
-@@ -651,7 +678,7 @@ class CoreInstall(object):
+@@ -651,7 +678,7 @@
                              break
                  if found_in_list:
                      break

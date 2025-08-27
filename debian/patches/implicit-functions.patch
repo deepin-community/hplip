@@ -1,0 +1,32 @@
+Description: Fix implicit function declaration
+ FTBFS on armhf as we forbid that there.
+Author: Simon Chopin <schopin@ubuntu.com>
+Last-Update: 2024-03-22 <YYYY-MM-DD, last update of the meta-information, optional>
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/scan/sane/hpaio.c
++++ b/scan/sane/hpaio.c
+@@ -51,6 +51,7 @@
+ #include "escl.h"
+ #include "io.h"
+ #include "orblitei.h"
++#include "orblite.h"
+ 
+ 
+ #define DEBUG_DECLARE_ONLY
+--- a/scan/sane/orblite.c
++++ b/scan/sane/orblite.c
+@@ -22,6 +22,13 @@
+ #include <math.h>
+ #include "utils.h"
+ #include "io.h"
++#include <dlfcn.h>
++
++# ifdef SCLPML_DEBUG
++   # define _DBG(args...) syslog(LOG_INFO, __FILE__ " " STRINGIZE(__LINE__) ": " args)
++# else
++   # define _DBG(args...)
++# endif
+ 
+ #ifdef __cplusplus
+  }

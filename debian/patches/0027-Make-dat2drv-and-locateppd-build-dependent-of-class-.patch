@@ -7,11 +7,9 @@ Subject: Make dat2drv and locateppd build dependent of class driver enabling;
  Makefile.am | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile.am b/Makefile.am
-index f23f3a8..efe3f17 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -623,12 +623,14 @@ endif # FAX_BUILD
+@@ -631,12 +631,14 @@
  endif # HPCUPS ONLY
  endif # HPCUPS_INSTALL
  
@@ -26,7 +24,7 @@ index f23f3a8..efe3f17 100644
  
  if HPPS_INSTALL
  hppsdir = $(cupsfilterdir)
-@@ -639,6 +641,7 @@ hpps_LDADD = -lcups  $(DBUS_LIBS)
+@@ -647,6 +649,7 @@
  endif #HPPS_INSTALL
  
  
@@ -34,7 +32,7 @@ index f23f3a8..efe3f17 100644
  #locate driver
  locatedriverdir = $(hplipdir)
  locatedriver_PROGRAMS = locatedriver
-@@ -646,7 +649,6 @@ locatedriver_SOURCES = FindPPD.cpp FindPPD.h
+@@ -654,7 +657,6 @@
  if GCC_GE_47
  locatedriver_CXXFLAGS = -std=c++11
  endif

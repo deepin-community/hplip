@@ -29,8 +29,6 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  scan/sane/soapht.c            | 20 ++++++++++----------
  23 files changed, 90 insertions(+), 58 deletions(-)
 
-diff --git a/Makefile.am b/Makefile.am
-index d3bbae8..907bcfd 100644
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -3,7 +3,7 @@
@@ -42,7 +40,7 @@ index d3bbae8..907bcfd 100644
  CFLAGS+= -DCONFDIR=\"$(hplip_confdir)\"
  CXXFLAGS+= -DCONFDIR=\"$(hplip_confdir)\"
  
-@@ -309,7 +309,7 @@ dist_pcard_DATA = pcard/__init__.py pcard/photocard.py
+@@ -309,7 +309,7 @@
  pcardextdir = $(pyexecdir)
  pcardext_LTLIBRARIES = pcardext.la
  pcardext_la_LDFLAGS = -module -avoid-version -lpython$(PYTHON_VERSION)m
@@ -51,7 +49,7 @@ index d3bbae8..907bcfd 100644
  pcardext_la_CFLAGS = -I$(PYTHONINCLUDEDIR)
  
  # prnt
-@@ -321,7 +321,7 @@ lib_LTLIBRARIES += libhpipp.la
+@@ -321,7 +321,7 @@
  #hpipp_LTLIBRARIES = hpipp.la
  #hpipp_la_LDFLAGS = -module -avoid-version
  libhpipp_la_SOURCES = protocol/hp_ipp.c protocol/hp_ipp.h protocol/hp_ipp_i.h
@@ -60,8 +58,6 @@ index d3bbae8..907bcfd 100644
  libhpipp_la_LDFLAGS = -version-info 0:1:0
  libhpipp_la_LIBADD = -lcups libhpmud.la
  
-diff --git a/common/utils.c b/common/utils.c
-index e7c5085..28abbd8 100644
 --- a/common/utils.c
 +++ b/common/utils.c
 @@ -1,5 +1,9 @@
@@ -75,11 +71,9 @@ index e7c5085..28abbd8 100644
  #include <dlfcn.h>
  #include <sys/stat.h>
  #include <errno.h>
-diff --git a/io/hpmud/hpmud.c b/io/hpmud/hpmud.c
-index a6c100f..b0a5a08 100644
 --- a/io/hpmud/hpmud.c
 +++ b/io/hpmud/hpmud.c
-@@ -759,6 +759,7 @@ enum HPMUD_RESULT hpmud_get_dstat(HPMUD_DEVICE dd, struct hpmud_dstat *ds)
+@@ -767,6 +767,7 @@
     }
  
     strncpy(ds->uri, msp->device[dd].uri, sizeof(ds->uri));
@@ -87,8 +81,6 @@ index a6c100f..b0a5a08 100644
     ds->io_mode = msp->device[dd].io_mode;
     ds->channel_cnt = msp->device[dd].channel_cnt;
     ds->mlc_up = msp->device[dd].mlc_up;
-diff --git a/io/hpmud/jd.c b/io/hpmud/jd.c
-index be3c823..c15ed9c 100644
 --- a/io/hpmud/jd.c
 +++ b/io/hpmud/jd.c
 @@ -31,6 +31,7 @@
@@ -99,11 +91,9 @@ index be3c823..c15ed9c 100644
  #include "hpmud.h"
  #include "hpmudi.h"
  
-diff --git a/io/hpmud/model.c b/io/hpmud/model.c
-index 4ea8990..a917d69 100644
 --- a/io/hpmud/model.c
 +++ b/io/hpmud/model.c
-@@ -117,6 +117,7 @@ static int ReadConfig()
+@@ -117,6 +117,7 @@
        if (rcbuf[0] == '[')
        {
           strncpy(section, rcbuf, sizeof(section)); /* found new section */
@@ -111,7 +101,7 @@ index 4ea8990..a917d69 100644
           continue;
        }
  
-@@ -125,6 +126,7 @@ static int ReadConfig()
+@@ -125,6 +126,7 @@
        if ((strncasecmp(section, "[dirs]", 6) == 0) && (strcasecmp(key, "home") == 0))
        {
           strncpy(homedir, value, sizeof(homedir));
@@ -119,11 +109,9 @@ index 4ea8990..a917d69 100644
           break;  /* done */
        }
     }
-diff --git a/io/hpmud/musb.c b/io/hpmud/musb.c
-index d6a0788..761f5f2 100644
 --- a/io/hpmud/musb.c
 +++ b/io/hpmud/musb.c
-@@ -776,7 +776,7 @@ static int device_id(int fd, unsigned char *buffer, int size)
+@@ -777,7 +777,7 @@
          len = size-1;   /* leave byte for zero termination */
      if (len > 2)
          len -= 2;
@@ -132,11 +120,9 @@ index d6a0788..761f5f2 100644
      buffer[len]=0;
      DBG("read actual device_id successfully fd=%d len=%d\n", fd, len);
  
-diff --git a/io/hpmud/pp.c b/io/hpmud/pp.c
-index 74c5fdc..021d627 100644
 --- a/io/hpmud/pp.c
 +++ b/io/hpmud/pp.c
-@@ -632,7 +632,7 @@ static int device_id(int fd, char *buffer, int size)
+@@ -632,7 +632,7 @@
        len = size-1;   /* leave byte for zero termination */
     if (len > 2)
        len -= 2;
@@ -145,11 +131,9 @@ index 74c5fdc..021d627 100644
     buffer[len]=0;
  
     DBG("read actual device_id successfully fd=%d len=%d\n", fd, len);
-diff --git a/pcard/fat.c b/pcard/fat.c
-index caa383f..e1425c0 100644
 --- a/pcard/fat.c
 +++ b/pcard/fat.c
-@@ -519,14 +519,17 @@ int FatFreeSpace(void)
+@@ -519,14 +519,17 @@
  
  int FatDiskAttributes( PHOTO_CARD_ATTRIBUTES * pa )
  {
@@ -170,7 +154,7 @@ index caa383f..e1425c0 100644
      pa->WriteProtect = da.WriteProtect;
      
      return 0;
-@@ -741,6 +744,7 @@ int FatSetCWD(char *dir)
+@@ -741,6 +744,7 @@
        return 1;
  
     strncpy(cwd.Name, fa.Name, sizeof(cwd.Name));
@@ -178,11 +162,9 @@ index caa383f..e1425c0 100644
     cwd.StartSector = ConvertClusterToSector(fa.StartCluster);
     cwd.CurrSector = cwd.StartSector;
     cwd.StartCluster = fa.StartCluster;
-diff --git a/prnt/hpcups/genPCLm.cpp b/prnt/hpcups/genPCLm.cpp
-index b923e42..293a12a 100644
 --- a/prnt/hpcups/genPCLm.cpp
 +++ b/prnt/hpcups/genPCLm.cpp
-@@ -1237,11 +1237,16 @@ void PCLmGenerator::writeJobTicket()
+@@ -1241,11 +1241,16 @@
  	char orientation[256];
  	char duplex[256];
  	char colorthemes[256];
@@ -204,7 +186,7 @@ index b923e42..293a12a 100644
  
  	snprintf(pOutStr,OUT_STR_SIZE,"%%  genPCLm (Ver: %f)\n",PCLM_Ver); writeStr2OutBuff(pOutStr);
  	snprintf(pOutStr,OUT_STR_SIZE,"%%============= Job Ticket =============\n"); writeStr2OutBuff(pOutStr);
-@@ -1635,7 +1640,10 @@ int  PCLmGenerator::StartPage(PCLmPageSetup *PCLmPageContent, void **pOutBuffer,
+@@ -1639,7 +1644,10 @@
  	}
  
  	if(strlen(PCLmPageContent->mediaSizeName))
@@ -216,11 +198,9 @@ index b923e42..293a12a 100644
  
  	currStripHeight=PCLmPageContent->stripHeight;
  	if(!currStripHeight)
-diff --git a/prnt/hpijs/context2.cpp b/prnt/hpijs/context2.cpp
-index c3df482..19490b1 100644
 --- a/prnt/hpijs/context2.cpp
 +++ b/prnt/hpijs/context2.cpp
-@@ -1302,6 +1302,7 @@ DRIVER_ERROR PrintContext::SelectDevice
+@@ -1302,6 +1302,7 @@
  	if(0 == strnlen((const char *)pSS->strDevID, DevIDBuffSize))
  	{
  		strncpy((char *)pSS->strDevID,szDeviceId,DevIDBuffSize);
@@ -228,11 +208,9 @@ index c3df482..19490b1 100644
  	}
      thePrinter = pPFI->CreatePrinter (pSS, familyHandle);
      if (thePrinter->constructor_error != NO_ERROR)
-diff --git a/prnt/hpijs/systemservices.cpp b/prnt/hpijs/systemservices.cpp
-index 95f5a64..f5b4bb5 100644
 --- a/prnt/hpijs/systemservices.cpp
 +++ b/prnt/hpijs/systemservices.cpp
-@@ -396,7 +396,10 @@ void SystemServices::AdjustIO(IO_MODE IM, const char* model)
+@@ -396,7 +396,10 @@
      IOMode.bDevID =IM.bDevID  && IOMode.bDevID;
  
      if (model)
@@ -243,11 +221,9 @@ index 95f5a64..f5b4bb5 100644
  }
  
  APDK_END_NAMESPACE
-diff --git a/prnt/hpps/hppsfilter.c b/prnt/hpps/hppsfilter.c
-index d6721b1..79a6bf3 100644
 --- a/prnt/hpps/hppsfilter.c
 +++ b/prnt/hpps/hppsfilter.c
-@@ -274,13 +274,13 @@ static void WriteHeader(char **argument)
+@@ -329,13 +329,13 @@
      /*		Writing Header Information
      argument[1] = JOB ID , argument[2]= USERNAME,  argument[3] = TITLE		*/
      hpwrite("\x1b%-12345X@PJL JOBNAME=", strlen("\x1b%-12345X@PJL JOBNAME="));
@@ -264,23 +240,20 @@ index d6721b1..79a6bf3 100644
      hpwrite(buffer, strlen(buffer));
      fprintf(stderr, "HP PS filter func = WriteHeader           : WRITING PJL HEADER INFO\n");
      return;
-diff --git a/protocol/hp_ipp.h b/protocol/hp_ipp.h
-index 245e798..03f6da5 100644
 --- a/protocol/hp_ipp.h
 +++ b/protocol/hp_ipp.h
-@@ -166,5 +166,10 @@ int     getCupsPrinters(printer_t **printer_list);
- HPIPP_RESULT parseResponseHeader(char* header, int *content_length, int *chunked, int* header_size);
- HPIPP_RESULT prepend_http_header(raw_ipp *raw_request);
+@@ -168,6 +168,11 @@
+ HPIPP_RESULT prepend_http_header(raw_ipp *raw_request,const char *resource);
  enum HPMUD_RESULT sendUSBRequest(char *buf, int size, raw_ipp *responseptr, char * device_uri);
+ enum HPMUD_RESULT sendUSBFileRequest(char *buf, int size, int fileHandle,raw_ipp *responseptr, char *device_uri);
 +void _releaseCupsInstance();
 +int addCupsPrinter(char *name, char *device_uri, char *location, char *ppd_file, char *model, char *info);
 +int delCupsPrinter(char *pr_name);
 +int setDefaultCupsPrinter(char *pr_name);
 +int controlCupsPrinter(char *pr_name, int op);
  
- # endif //_IPP_H
-diff --git a/scan/sane/bb_ledm.c b/scan/sane/bb_ledm.c
-index 168a6ab..4bdb304 100644
+ ipp_t * createFaxDetailRequest(const char *printer_name);
+ ipp_t * getDeviceFaxModemAttributes(char* device_uri,char* printer_name, int *count);
 --- a/scan/sane/bb_ledm.c
 +++ b/scan/sane/bb_ledm.c
 @@ -26,6 +26,7 @@
@@ -291,8 +264,6 @@ index 168a6ab..4bdb304 100644
  
  # include <stdint.h>
  
-diff --git a/scan/sane/common.h b/scan/sane/common.h
-index cdddd94..062d3a4 100644
 --- a/scan/sane/common.h
 +++ b/scan/sane/common.h
 @@ -36,7 +36,7 @@
@@ -304,11 +275,9 @@ index cdddd94..062d3a4 100644
  #define BUG_DUMP(data, size) bugdump((data), (size))
  #define BUG_SZ(args...) {syslog(LOG_ERR, args); DBG(2, args);}
  
-diff --git a/scan/sane/escl.c b/scan/sane/escl.c
-index 557b844..9fbbcaf 100644
 --- a/scan/sane/escl.c
 +++ b/scan/sane/escl.c
-@@ -849,7 +849,7 @@ SANE_Status escl_control_option(SANE_Handle handle, SANE_Int option, SANE_Action
+@@ -849,7 +849,7 @@
    //DBG8("escl_control_option (option=%s) action=%d\n", ps->option[option].name, action);
    if (stat != SANE_STATUS_GOOD)
    {
@@ -317,7 +286,7 @@ index 557b844..9fbbcaf 100644
    }
  
     return stat;
-@@ -1159,7 +1159,7 @@ void escl_close(SANE_Handle handle)
+@@ -1159,7 +1159,7 @@
  
    if (ps == NULL || ps != session)
    {
@@ -326,8 +295,6 @@ index 557b844..9fbbcaf 100644
      return;
    }
  
-diff --git a/scan/sane/http.c b/scan/sane/http.c
-index 800df91..45668cd 100644
 --- a/scan/sane/http.c
 +++ b/scan/sane/http.c
 @@ -36,6 +36,7 @@
@@ -338,11 +305,9 @@ index 800df91..45668cd 100644
  #include "hpmud.h"
  #include "http.h"
  
-diff --git a/scan/sane/io.c b/scan/sane/io.c
-index 4508458..dbbb296 100755
 --- a/scan/sane/io.c
 +++ b/scan/sane/io.c
-@@ -50,7 +50,7 @@ int __attribute__ ((visibility ("hidden"))) InitDbus(void)
+@@ -50,7 +50,7 @@
      
     if (dbus_error_is_set(&dbus_err))
     { 
@@ -351,7 +316,7 @@ index 4508458..dbbb296 100755
        dbus_error_free(&dbus_err); 
     }
  
-@@ -79,7 +79,7 @@ int __attribute__ ((visibility ("hidden"))) SendScanEvent(char *device_uri, int
+@@ -79,7 +79,7 @@
  
      if (NULL == msg)
      {
@@ -360,7 +325,7 @@ index 4508458..dbbb296 100755
          return 0;
      }
  
-@@ -94,7 +94,7 @@ int __attribute__ ((visibility ("hidden"))) SendScanEvent(char *device_uri, int
+@@ -94,7 +94,7 @@
  
      if (!dbus_connection_send(dbus_conn, msg, NULL))
      {
@@ -369,11 +334,9 @@ index 4508458..dbbb296 100755
          return 0;
      }
  
-diff --git a/scan/sane/ledm.c b/scan/sane/ledm.c
-index a56f534..a594008 100644
 --- a/scan/sane/ledm.c
 +++ b/scan/sane/ledm.c
-@@ -813,7 +813,7 @@ SANE_Status ledm_control_option(SANE_Handle handle, SANE_Int option, SANE_Action
+@@ -813,7 +813,7 @@
  
    if (stat != SANE_STATUS_GOOD)
    {
@@ -382,7 +345,7 @@ index a56f534..a594008 100644
    }
  
     return stat;
-@@ -1080,7 +1080,7 @@ void ledm_close(SANE_Handle handle)
+@@ -1080,7 +1080,7 @@
  
    if (ps == NULL || ps != session)
    {
@@ -391,11 +354,9 @@ index a56f534..a594008 100644
      return;
    }
  
-diff --git a/scan/sane/marvell.c b/scan/sane/marvell.c
-index 6cac67a..fce2458 100644
 --- a/scan/sane/marvell.c
 +++ b/scan/sane/marvell.c
-@@ -134,7 +134,7 @@ static int get_ip_data(struct marvell_session *ps, SANE_Byte *data, SANE_Int max
+@@ -134,7 +134,7 @@
  
     if (!ps->ip_handle)
     {
@@ -404,7 +365,7 @@ index 6cac67a..fce2458 100644
        goto bugout;
     }
     
-@@ -335,7 +335,7 @@ static struct marvell_session *create_session()
+@@ -335,7 +335,7 @@
  
     if ((ps = malloc(sizeof(struct marvell_session))) == NULL)
     {
@@ -413,7 +374,7 @@ index 6cac67a..fce2458 100644
        return NULL;
     }
     memset(ps, 0, sizeof(struct marvell_session));
-@@ -402,7 +402,7 @@ SANE_Status marvell_open(SANE_String_Const device, SANE_Handle *handle)
+@@ -402,7 +402,7 @@
  
     if (session)
     {
@@ -422,7 +383,7 @@ index 6cac67a..fce2458 100644
        return SANE_STATUS_DEVICE_BUSY;
     }
        
-@@ -431,7 +431,7 @@ SANE_Status marvell_open(SANE_String_Const device, SANE_Handle *handle)
+@@ -431,7 +431,7 @@
  
     if (hpmud_open_device(session->uri, ma.mfp_mode, &session->dd) != HPMUD_R_OK)
     {
@@ -431,7 +392,7 @@ index 6cac67a..fce2458 100644
        goto bugout;
  
        free(session);
-@@ -441,7 +441,7 @@ SANE_Status marvell_open(SANE_String_Const device, SANE_Handle *handle)
+@@ -441,7 +441,7 @@
  
     if (hpmud_open_channel(session->dd, HPMUD_S_MARVELL_SCAN_CHANNEL, &session->cd) != HPMUD_R_OK)
     {
@@ -440,7 +401,7 @@ index 6cac67a..fce2458 100644
        stat = SANE_STATUS_DEVICE_BUSY;
        goto bugout;
     }
-@@ -554,7 +554,7 @@ void marvell_close(SANE_Handle handle)
+@@ -554,7 +554,7 @@
  
     if (ps == NULL || ps != session)
     {
@@ -449,7 +410,7 @@ index 6cac67a..fce2458 100644
        return;
     }
  
-@@ -849,7 +849,7 @@ SANE_Status marvell_control_option(SANE_Handle handle, SANE_Int option, SANE_Act
+@@ -849,7 +849,7 @@
                 stat = SANE_STATUS_GOOD;
                 break;
              }
@@ -458,7 +419,7 @@ index 6cac67a..fce2458 100644
           }
           else
           {  /* Set default. */
-@@ -866,7 +866,7 @@ SANE_Status marvell_control_option(SANE_Handle handle, SANE_Int option, SANE_Act
+@@ -866,7 +866,7 @@
  
     if (stat != SANE_STATUS_GOOD)
     {
@@ -467,7 +428,7 @@ index 6cac67a..fce2458 100644
                    action==SANE_ACTION_GET_VALUE ? "get" : action==SANE_ACTION_SET_VALUE ? "set" : "auto");
     }
  
-@@ -905,7 +905,7 @@ SANE_Status marvell_start(SANE_Handle handle)
+@@ -905,7 +905,7 @@
     
     if (set_extents(ps))
     {
@@ -476,7 +437,7 @@ index 6cac67a..fce2458 100644
           ps->currentTlx, ps->currentTly, ps->currentBrx, ps->currentBry, ps->min_width, ps->min_height, ps->tlxRange.max, ps->tlyRange.max);
        stat = SANE_STATUS_INVAL;
        goto bugout;
-@@ -963,7 +963,7 @@ SANE_Status marvell_start(SANE_Handle handle)
+@@ -963,7 +963,7 @@
     /* Open image processor. */
     if ((ret = ipOpen(pXform-xforms, xforms, 0, &ps->ip_handle)) != IP_DONE)
     {
@@ -485,7 +446,7 @@ index 6cac67a..fce2458 100644
        stat = SANE_STATUS_INVAL;
        goto bugout;
     }
-@@ -1023,7 +1023,7 @@ SANE_Status marvell_read(SANE_Handle handle, SANE_Byte *data, SANE_Int maxLength
+@@ -1023,7 +1023,7 @@
  
     if(ret & (IP_INPUT_ERROR | IP_FATAL_ERROR))
     {
@@ -494,8 +455,6 @@ index 6cac67a..fce2458 100644
        goto bugout;
     }
  
-diff --git a/scan/sane/sclpml.c b/scan/sane/sclpml.c
-index 61500da..dfeedb9 100644
 --- a/scan/sane/sclpml.c
 +++ b/scan/sane/sclpml.c
 @@ -30,6 +30,7 @@
@@ -506,7 +465,7 @@ index 61500da..dfeedb9 100644
  #include "sane.h"
  #include "saneopts.h"
  #include "common.h"
-@@ -2087,7 +2088,7 @@ void sclpml_close(SANE_Handle handle)
+@@ -2087,7 +2088,7 @@
      DBG(8, "sane_hpaio_close(): %s %d\n", __FILE__, __LINE__); 
      if (hpaio == NULL || hpaio != session)
      {
@@ -515,11 +474,9 @@ index 61500da..dfeedb9 100644
        return;
       }
  
-diff --git a/scan/sane/soap.c b/scan/sane/soap.c
-index a45f1a0..e59fb46 100644
 --- a/scan/sane/soap.c
 +++ b/scan/sane/soap.c
-@@ -142,7 +142,7 @@ static int get_ip_data(struct soap_session *ps, SANE_Byte *data, SANE_Int maxLen
+@@ -142,7 +142,7 @@
  
     if (!ps->ip_handle)
     {
@@ -528,7 +485,7 @@ index a45f1a0..e59fb46 100644
        goto bugout;
     }      
  
-@@ -219,7 +219,7 @@ static struct soap_session *create_session()
+@@ -219,7 +219,7 @@
  
     if ((ps = malloc(sizeof(struct soap_session))) == NULL)
     {
@@ -537,7 +494,7 @@ index a45f1a0..e59fb46 100644
        return NULL;
     }
     memset(ps, 0, sizeof(struct soap_session));
-@@ -418,7 +418,7 @@ SANE_Status soap_open(SANE_String_Const device, SANE_Handle *handle)
+@@ -418,7 +418,7 @@
  
     if (session)
     {
@@ -546,7 +503,7 @@ index a45f1a0..e59fb46 100644
        return SANE_STATUS_DEVICE_BUSY;
     }
  
-@@ -434,7 +434,7 @@ SANE_Status soap_open(SANE_String_Const device, SANE_Handle *handle)
+@@ -434,7 +434,7 @@
  
     if (hpmud_open_device(session->uri, ma.mfp_mode, &session->dd) != HPMUD_R_OK)
     {
@@ -555,7 +512,7 @@ index a45f1a0..e59fb46 100644
        goto bugout;
  
        free(session);
-@@ -519,7 +519,7 @@ void soap_close(SANE_Handle handle)
+@@ -519,7 +519,7 @@
  
     if (ps == NULL || ps != session)
     {
@@ -564,7 +521,7 @@ index a45f1a0..e59fb46 100644
        return;
     }
  
-@@ -824,7 +824,7 @@ SANE_Status soap_control_option(SANE_Handle handle, SANE_Int option, SANE_Action
+@@ -824,7 +824,7 @@
  
     if (stat != SANE_STATUS_GOOD)
     {
@@ -573,7 +530,7 @@ index a45f1a0..e59fb46 100644
                    action==SANE_ACTION_GET_VALUE ? "get" : action==SANE_ACTION_SET_VALUE ? "set" : "auto");
     }
  
-@@ -862,7 +862,7 @@ SANE_Status soap_start(SANE_Handle handle)
+@@ -862,7 +862,7 @@
     ps->user_cancel = 0;
     if (set_extents(ps))
     {
@@ -582,7 +539,7 @@ index a45f1a0..e59fb46 100644
           ps->currentTlx, ps->currentTly, ps->currentBrx, ps->currentBry, ps->min_width, ps->min_height, ps->tlxRange.max, ps->tlyRange.max);
        stat = SANE_STATUS_INVAL;
        goto bugout;
-@@ -913,7 +913,7 @@ SANE_Status soap_start(SANE_Handle handle)
+@@ -913,7 +913,7 @@
     /* Open image processor. */
     if ((ret = ipOpen(pXform-xforms, xforms, 0, &ps->ip_handle)) != IP_DONE)
     {
@@ -591,7 +548,7 @@ index a45f1a0..e59fb46 100644
        stat = SANE_STATUS_INVAL;
        goto bugout;
     }
-@@ -955,7 +955,7 @@ SANE_Status soap_start(SANE_Handle handle)
+@@ -955,7 +955,7 @@
  
           if (ret & (IP_INPUT_ERROR | IP_FATAL_ERROR | IP_DONE))
           {
@@ -600,7 +557,7 @@ index a45f1a0..e59fb46 100644
              stat = SANE_STATUS_IO_ERROR;
              goto bugout;
           }
-@@ -1007,7 +1007,7 @@ SANE_Status soap_read(SANE_Handle handle, SANE_Byte *data, SANE_Int maxLength, S
+@@ -1007,7 +1007,7 @@
  
     if(ret & (IP_INPUT_ERROR | IP_FATAL_ERROR))
     {
@@ -609,11 +566,9 @@ index a45f1a0..e59fb46 100644
        goto bugout;
     }
  
-diff --git a/scan/sane/soapht.c b/scan/sane/soapht.c
-index df0e807..c8de979 100644
 --- a/scan/sane/soapht.c
 +++ b/scan/sane/soapht.c
-@@ -136,7 +136,7 @@ static int get_ip_data(struct soap_session *ps, SANE_Byte *data, SANE_Int maxLen
+@@ -136,7 +136,7 @@
  
     if (!ps->ip_handle)
     {
@@ -622,7 +577,7 @@ index df0e807..c8de979 100644
        goto bugout;
     }      
  
-@@ -435,7 +435,7 @@ static struct soap_session *create_session()
+@@ -435,7 +435,7 @@
  
     if ((ps = malloc(sizeof(struct soap_session))) == NULL)
     {
@@ -631,7 +586,7 @@ index df0e807..c8de979 100644
        return NULL;
     }
     memset(ps, 0, sizeof(struct soap_session));
-@@ -459,7 +459,7 @@ SANE_Status soapht_open(SANE_String_Const device, SANE_Handle *handle)
+@@ -459,7 +459,7 @@
  
     if (session)
     {
@@ -640,7 +595,7 @@ index df0e807..c8de979 100644
        return SANE_STATUS_DEVICE_BUSY;
     }
  
-@@ -475,7 +475,7 @@ SANE_Status soapht_open(SANE_String_Const device, SANE_Handle *handle)
+@@ -475,7 +475,7 @@
  
     if (hpmud_open_device(session->uri, ma.mfp_mode, &session->dd) != HPMUD_R_OK)
     {
@@ -649,7 +604,7 @@ index df0e807..c8de979 100644
        goto bugout;
  
        free(session);
-@@ -554,7 +554,7 @@ void soapht_close(SANE_Handle handle)
+@@ -554,7 +554,7 @@
  
     if (ps == NULL || ps != session)
     {
@@ -658,7 +613,7 @@ index df0e807..c8de979 100644
        return;
     }
  
-@@ -904,7 +904,7 @@ SANE_Status soapht_control_option(SANE_Handle handle, SANE_Int option, SANE_Acti
+@@ -904,7 +904,7 @@
  
     if (stat != SANE_STATUS_GOOD)
     {
@@ -667,7 +622,7 @@ index df0e807..c8de979 100644
                    action==SANE_ACTION_GET_VALUE ? "get" : action==SANE_ACTION_SET_VALUE ? "set" : "auto");
     }
  
-@@ -946,7 +946,7 @@ SANE_Status soapht_start(SANE_Handle handle)
+@@ -946,7 +946,7 @@
    
     if (set_extents(ps))
     {
@@ -676,7 +631,7 @@ index df0e807..c8de979 100644
           ps->currentTlx, ps->currentTly, ps->currentBrx, ps->currentBry, ps->min_width, ps->min_height, ps->tlxRange.max, ps->tlyRange.max);
        stat = SANE_STATUS_INVAL;
        goto bugout;
-@@ -1032,7 +1032,7 @@ SANE_Status soapht_start(SANE_Handle handle)
+@@ -1032,7 +1032,7 @@
     /* Open image processor. */
     if ((ret = ipOpen(pXform-xforms, xforms, 0, &ps->ip_handle)) != IP_DONE)
     {
@@ -685,7 +640,7 @@ index df0e807..c8de979 100644
        stat = SANE_STATUS_INVAL;
        goto bugout;
     }
-@@ -1075,7 +1075,7 @@ SANE_Status soapht_start(SANE_Handle handle)
+@@ -1075,7 +1075,7 @@
  
           if (ret & (IP_INPUT_ERROR | IP_FATAL_ERROR | IP_DONE))
           {
@@ -694,7 +649,7 @@ index df0e807..c8de979 100644
              stat = SANE_STATUS_IO_ERROR;
              goto bugout;
           }
-@@ -1124,7 +1124,7 @@ SANE_Status soapht_read(SANE_Handle handle, SANE_Byte *data, SANE_Int maxLength,
+@@ -1124,7 +1124,7 @@
  
     if(ret & (IP_INPUT_ERROR | IP_FATAL_ERROR))
     {

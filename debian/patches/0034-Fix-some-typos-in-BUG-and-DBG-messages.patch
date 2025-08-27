@@ -10,11 +10,9 @@ Subject: =?utf-8?q?Fix_some_typos_in_BUG=C2=A0and_DBG=C2=A0messages?=
  scan/sane/saneopts.h       | 2 +-
  5 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/common/utils.c b/common/utils.c
-index d8ecee9..e7c5085 100644
 --- a/common/utils.c
 +++ b/common/utils.c
-@@ -252,7 +252,7 @@ void *get_library_symbol(void *pLibHandler, const char *szSymbol)
+@@ -252,7 +252,7 @@
      void *pSymHandler = NULL;
      if (pLibHandler == NULL)
      {
@@ -23,7 +21,7 @@ index d8ecee9..e7c5085 100644
          return NULL;
      }
  
-@@ -274,7 +274,7 @@ void unload_library(void *pLibHandler)
+@@ -274,7 +274,7 @@
      if (pLibHandler)
          dlclose(pLibHandler);
      else
@@ -32,11 +30,9 @@ index d8ecee9..e7c5085 100644
  }
  
  int createTempFile(char* szFileName, FILE** pFilePtr)
-diff --git a/prnt/backend/hp.c b/prnt/backend/hp.c
-index 07713b2..066866e 100644
 --- a/prnt/backend/hp.c
 +++ b/prnt/backend/hp.c
-@@ -666,7 +666,7 @@ static void save_out_file(int fd, int copies, FILE * temp_fp)
+@@ -666,7 +666,7 @@
  
     if (NULL == temp_fp)
     {
@@ -45,11 +41,9 @@ index 07713b2..066866e 100644
         return;
     }
  
-diff --git a/prnt/hpcups/LJZjStream.cpp b/prnt/hpcups/LJZjStream.cpp
-index 9b06cf8..45a0c7a 100644
 --- a/prnt/hpcups/LJZjStream.cpp
 +++ b/prnt/hpcups/LJZjStream.cpp
-@@ -685,7 +685,7 @@ DRIVER_ERROR LJZjStream::preProcessRasterData(cups_raster_t **ppcups_raster, cup
+@@ -685,7 +685,7 @@
  		return  NO_ERROR;                                  
      }    
  
@@ -58,30 +52,26 @@ index 9b06cf8..45a0c7a 100644
  
      memcpy(&cups_header, firstpage_cups_header, sizeof(cups_page_header2_t));
  
-diff --git a/protocol/hp_ipp.c b/protocol/hp_ipp.c
-index 97d827d..e8c9b81 100644
 --- a/protocol/hp_ipp.c
 +++ b/protocol/hp_ipp.c
-@@ -941,7 +941,7 @@ enum HPMUD_RESULT readChannel(raw_ipp *responseptr, HPMUD_DEVICE hd, HPMUD_CHANN
-         {        
-             if(memcmp(&data[*size - CHUNK_DELIMITER_LENGTH], CHUNK_DELIMITER, CHUNK_DELIMITER_LENGTH) == 0)
+@@ -1121,7 +1121,7 @@
+         {
+             if (memcmp(&data[*size - CHUNK_DELIMITER_LENGTH], CHUNK_DELIMITER, CHUNK_DELIMITER_LENGTH) == 0)
              {
 -                DBG("Chunk end recieved....\n");
 +                DBG("Chunk end received....\n");
-                 break;        
+                 break;
              }
          }
-@@ -950,7 +950,7 @@ enum HPMUD_RESULT readChannel(raw_ipp *responseptr, HPMUD_DEVICE hd, HPMUD_CHANN
+@@ -1130,7 +1130,7 @@
              bytes_remaining -= bytes_read;
-             if(bytes_remaining == 0)
+             if (bytes_remaining == 0)
              {
 -                DBG("Complete unchunked data recieved....\n");
 +                DBG("Complete unchunked data received....\n");
-                 break;   
+                 break;
              }
          }
-diff --git a/scan/sane/saneopts.h b/scan/sane/saneopts.h
-index fcc460f..2d5a701 100755
 --- a/scan/sane/saneopts.h
 +++ b/scan/sane/saneopts.h
 @@ -133,7 +133,7 @@

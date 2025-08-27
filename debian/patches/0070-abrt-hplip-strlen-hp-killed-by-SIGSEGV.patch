@@ -11,11 +11,9 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-logging-seg
  io/hpmud/musb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io/hpmud/musb.c b/io/hpmud/musb.c
-index 761f5f2..3e26bc4 100644
 --- a/io/hpmud/musb.c
 +++ b/io/hpmud/musb.c
-@@ -1455,7 +1455,7 @@ enum HPMUD_RESULT __attribute__ ((visibility ("hidden"))) musb_raw_channel_write
+@@ -1456,7 +1456,7 @@
                      BUG("unable to write data %s: %d second io timeout\n", msp->device[pc->dindex].uri, sec_timeout);
              }
              else
