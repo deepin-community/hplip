@@ -7,11 +7,9 @@ Subject: Some of the print modes for DeskJet 815C are incorrectly defined
  prnt/hpcups/dj8x5PrintModes.h | 8 ++++----
  2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/prnt/drv/hpcups.drv.in b/prnt/drv/hpcups.drv.in
-index da7a4c0..dd91b0b 100644
 --- a/prnt/drv/hpcups.drv.in
 +++ b/prnt/drv/hpcups.drv.in
-@@ -21719,7 +21719,7 @@ Group "RLT/HP Real Life Technologies"
+@@ -22170,7 +22170,7 @@
      Choice "DraftRGB/Draft Color" "<</cupsColorSpace 1/cupsBitsPerColor 8/cupsRowStep 0/OutputType(-1)/cupsString0(PlainDraftColor)/HWResolution[300 300]>>setpagedevice"
      Choice "DraftGray/Draft Grayscale" "<</cupsColorSpace 1/cupsBitsPerColor 8/cupsRowStep 2/OutputType(-1)/cupsString0(PlainDraftGrayK)/HWResolution[300 300]>>setpagedevice"
      //Choice "BestGray/Best Grayscale" "<</cupsColorSpace 1/cupsBitsPerColor 8/cupsRowStep 2/cupsCompression 2/HWResolution[600 600]>>setpagedevice"  // black only
@@ -20,11 +18,9 @@ index da7a4c0..dd91b0b 100644
  
    // Constraints
    UIConstraints "*MediaType Glossy *OutputMode DraftGray"
-diff --git a/prnt/hpcups/dj8x5PrintModes.h b/prnt/hpcups/dj8x5PrintModes.h
-index 590ca3f..2bf0f26 100644
 --- a/prnt/hpcups/dj8x5PrintModes.h
 +++ b/prnt/hpcups/dj8x5PrintModes.h
-@@ -21,7 +21,7 @@ PrintMode dj8x5PrintModes[] =
+@@ -21,7 +21,7 @@
          "PlainNormalColor",
          {600, 300, 300, 300, 300, 300},
          {600, 300, 300, 300, 300, 300},
@@ -33,7 +29,7 @@ index 590ca3f..2bf0f26 100644
          {ulMapDJ895_KCMY, NULL, NULL},
          300, 300, true, HTBinary_open, HT300x3004level_open
      },
-@@ -31,7 +31,7 @@ PrintMode dj8x5PrintModes[] =
+@@ -31,7 +31,7 @@
          {600, 300, 300, 300, 300, 300},
          {1, 1, 1, 1, 1, 1}, 1, FED,
          {ulMapGRAY_K_6x6x1, NULL, NULL},
@@ -42,7 +38,7 @@ index 590ca3f..2bf0f26 100644
      },
      {
          "PlainNormalCMY",
-@@ -47,7 +47,7 @@ PrintMode dj8x5PrintModes[] =
+@@ -47,7 +47,7 @@
          {600, 600, 600, 600, 600, 600},
          {1, 2, 2, 2, 2, 2}, 4, FED,
          {ulMapDJ895_HB_KCMY, NULL, NULL},
@@ -51,7 +47,7 @@ index 590ca3f..2bf0f26 100644
      },
      {
          "PhotoBestCMY",
-@@ -55,7 +55,7 @@ PrintMode dj8x5PrintModes[] =
+@@ -55,7 +55,7 @@
          {600, 600, 600, 600, 600, 600},
          {1, 2, 2, 2, 2, 2}, 3, FED,
          {ulMapDJ895_HB_KCMY, NULL, NULL},

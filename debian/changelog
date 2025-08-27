@@ -1,20 +1,98 @@
-hplip (3.22.10+dfsg0-5deepin2) unstable; urgency=medium
+hplip (3.24.4+dfsg0-0ubuntu5) plucky; urgency=medium
 
-  * add Recommends hplip-plugin.
+  * Add python3-setuptools to Buils-Depends:, to fix FTBFS discovered in
+    archive rebuild for Plucky (Also Debian bugs #1101609 and #1100223).
 
- -- LiChengGang <lichenggang@uniontech.com>  Fri, 06 Sep 2024 09:25:16 +0800
+ -- Till Kamppeter <till.kamppeter@gmail.com>  Mon, 31 Mar 2025 01:00:00 +0200
 
-hplip (3.22.10+dfsg0-5deepin1) unstable; urgency=medium
+hplip (3.24.4+dfsg0-0ubuntu4) plucky; urgency=medium
 
-  * Use read_file instead of readfp for python 3.12.
+  * No-change rebuild for Python 3.13 as the default.
 
- -- Tianyu Chen <sweetyfish@deepin.org>  Tue, 09 Jul 2024 06:19:24 +0200
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 03 Jan 2025 14:45:42 +0100
 
-hplip (3.22.10+dfsg0-5) unstable; urgency=medium
+hplip (3.24.4+dfsg0-0ubuntu3) oracular; urgency=low
 
-  * take care of implicit function declarations (Closes: #1066348)
+  [ Nathan Pratta Teodosio ]
+  * debian/patches/0089-correct-invalid-escapes.patch: Fixed further
+    invalid escapes, upstream seems still not aware of the problem
+    (LP: #2029480, LP: #2054869).
 
- -- Thorsten Alteholz <debian@alteholz.de>  Fri, 26 Apr 2024 23:39:02 +0200
+ -- Till Kamppeter <till.kamppeter@gmail.com>  Wed, 14 Aug 2024 19:02:08 +0200
+
+hplip (3.24.4+dfsg0-0ubuntu2) oracular; urgency=low
+
+  * debian/patches/0088-gcc14-corrections.patch: Fixed compilation errors
+    which occurred with gcc 14.
+
+ -- Till Kamppeter <till.kamppeter@gmail.com>  Wed, 14 Aug 2024 13:19:08 +0200
+
+hplip (3.24.4+dfsg0-0ubuntu1) oracular; urgency=low
+
+  * Update to new upstream version 3.24.4+dfsg0
+    - Modified source tarball generated following debian/DEBIAN_NEW_UPSTREAM,
+      but clone hplip.v2.git, not hplip.git. Ignore the git 'debrebase'
+      error, at that point the tarball hplip_3.24.4+dfsg0.orig.tar.xz
+      is already in the parent directory.
+  * Manually updated patches:
+    - 0084-Replace-readfp-by-read-file.patch (Upstream partially fixed it)
+  * Refreshed some of the other patches.
+  * Merge from Debian unstable. Remaining changes:
+    - Lower the python3-reportlab depends to a suggests to not have to MIR
+      python-rlpycairo now, reportlab is only needed for unused fax utils.
+
+ -- Till Kamppeter <till.kamppeter@gmail.com>  Tue, 27 Feb 2024 14:46:08 +0100
+
+hplip (3.23.12+dfsg0-0ubuntu5) noble; urgency=medium
+
+  * No-change rebuild for CVE-2024-3094
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Sun, 31 Mar 2024 07:39:41 +0000
+
+hplip (3.23.12+dfsg0-0ubuntu4) noble; urgency=medium
+
+  * Fix FTBFS on armhf due to implicit functions
+
+ -- Simon Chopin <schopin@ubuntu.com>  Fri, 22 Mar 2024 15:40:13 +0100
+
+hplip (3.23.12+dfsg0-0ubuntu3) noble; urgency=medium
+
+  * No-change rebuild against libcups2t64.
+
+ -- Michael Hudson-Doyle <michael.hudson@ubuntu.com>  Wed, 20 Mar 2024 13:50:24 +1300
+
+hplip (3.23.12+dfsg0-0ubuntu2) noble; urgency=low
+
+  * 0086-hplip-use-raw-strings.patch: Zdenek Dohnal's patch from upstream
+    bug LP: #2029480 (adapted where needed) to fix SyntaxWarnings coming
+    up with Python 3.12 (LP: #2054869).
+
+ -- Till Kamppeter <till.kamppeter@gmail.com>  Wed, 13 Mar 2024 20:30:08 +0100
+
+hplip (3.23.12+dfsg0-0ubuntu1) noble; urgency=low
+
+  * Update to new upstream version 3.23.12+dfsg0
+  * Manually updated patches:
+    - 0005-Cope-with-prnt-hpcups-ErnieFilter.-cpp-h-removal-by-.patch
+    - 0020-In-hp-scan-s-manpage-sort-PAGE_SIZES-in-help-for-the.patch
+    - 0029-Call-QMessageBox-constructors-of-PyQT5-with-the-corr.patch
+    - 0034-Fix-some-typos-in-BUG-and-DBG-messages.patch
+    - 0064-Fix-AttributeError-when-connecting-to-printer-via-wi.patch
+    - 0069-Fixing-issues-found-by-coverity-scan.patch
+    - 0074-py3.8-Fix-SyntaxWarning-is-is-not-with-a-literal.patch
+  * Removed patch:
+    - 0083-add-format-string-to-snprintf.patch
+  * Refreshed some of the other patches.
+  * 0084-Replace-readfp-by-read-file.patch: In Python's configparser
+    module readfp() is replaced by read_file().
+  * 0085-Fix-hp-color-laserjet-mfp-e78635-ps-ppd.patch: Fixed broken
+    PostScript PPD file for HP Color LaserJet MFP E78635.
+  * Install new hpcdmfax filter.
+  * Merge from Debian unstable. Remaining changes:
+    - Lower the python3-reportlab depends to a suggests to not have to MIR
+      python-rlpycairo now, reportlab is only needed for unused fax utils.
+
+ -- Till Kamppeter <till.kamppeter@gmail.com>  Tue, 27 Feb 2024 14:46:08 +0100
 
 hplip (3.22.10+dfsg0-4) unstable; urgency=medium
 
@@ -31,6 +109,20 @@ hplip (3.22.10+dfsg0-3) unstable; urgency=medium
                     (Closes: #1025574)
 
  -- Thorsten Alteholz <debian@alteholz.de>  Thu, 14 Sep 2023 22:39:02 +0200
+
+hplip (3.22.10+dfsg0-2ubuntu2) noble; urgency=medium
+
+  * No-change rebuild with Python 3.12 as default
+
+ -- Graham Inggs <ginggs@ubuntu.com>  Sat, 20 Jan 2024 08:47:21 +0000
+
+hplip (3.22.10+dfsg0-2ubuntu1) mantic; urgency=medium
+
+  * debian/control:
+    - lower the python3-reportlab depends to a suggests to not have to MIR
+      python-rlpycairo now, reportlab it's only needed for unused fax utils
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Fri, 01 Sep 2023 17:01:06 +0200
 
 hplip (3.22.10+dfsg0-2) unstable; urgency=medium
 
@@ -3154,15 +3246,12 @@ hplip (3.9.2-1ubuntu2) jaunty; urgency=low
  -- Steve Langasek <steve.langasek@ubuntu.com>  Mon, 16 Mar 2009 12:50:52 +0000
 
 hplip (3.9.2-1ubuntu1)) jaunty; urgency=low
-
   [ Till Kamppeter ]
   * debian/patches/hpdio_settings_dialog.dpatch: Bug fix patch from upstream,
     fixes busy loop when switching to another user and crash of settings
     dialog (see LP: #335116).
-
   [ Mark Purcell ]
   * debian/control: Standards version 3.8.0.
-
  -- Mark Purcell <msp@debian.org>  Sun, 15 Mar 2009 08:26:16 +1100
 
 hplip (3.9.2-1) unstable; urgency=low
@@ -6770,3 +6859,4 @@ hpijs (1.0-1) unstable; urgency=low
   * Initial release.
 
  -- Torsten Landschoff <torsten@debian.org>  Sat, 12 Jan 2002 03:40:10 +0100
+

@@ -9,11 +9,9 @@ Bug-Ubuntu: https://launchpad.net/bugs/1904318
  prnt/hpcups/HPCupsFilter.h   |  1 +
  2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/prnt/hpcups/HPCupsFilter.cpp b/prnt/hpcups/HPCupsFilter.cpp
-index f0ad0eb..fdf2984 100644
 --- a/prnt/hpcups/HPCupsFilter.cpp
 +++ b/prnt/hpcups/HPCupsFilter.cpp
-@@ -203,7 +203,7 @@ void HPCupsFilter::WriteKBMPRaster (FILE *fp, BYTE *pbyk, int width)
+@@ -203,7 +203,7 @@
      fwrite (black_raster, 1, adj_k_width, fp);
  }
  
@@ -22,7 +20,7 @@ index f0ad0eb..fdf2984 100644
  {
      setbuf (stderr, NULL);
  
-@@ -230,6 +230,7 @@ void HPCupsFilter::cleanup()
+@@ -230,6 +230,7 @@
      if (m_pPrinterBuffer) {
          delete [] m_pPrinterBuffer;
          m_pPrinterBuffer = NULL;
@@ -30,7 +28,7 @@ index f0ad0eb..fdf2984 100644
      }
  
      if(m_ppd){
-@@ -511,8 +512,6 @@ DRIVER_ERROR HPCupsFilter::startPage (cups_page_header2_t *cups_header)
+@@ -511,8 +512,6 @@
          dbglog("HPCUPS: returning NO_ERROR from startPage\n");
      }
  
@@ -39,7 +37,7 @@ index f0ad0eb..fdf2984 100644
      return NO_ERROR;
  }
  
-@@ -693,6 +692,14 @@ int HPCupsFilter::processRasterData(cups_raster_t *cups_raster)
+@@ -690,6 +689,14 @@
         #endif
          current_page_number++;
  
@@ -54,11 +52,9 @@ index f0ad0eb..fdf2984 100644
          if (current_page_number == 1) {
  
              if (startPage(&cups_header) != NO_ERROR) {
-diff --git a/prnt/hpcups/HPCupsFilter.h b/prnt/hpcups/HPCupsFilter.h
-index 60f8580..f5f0706 100644
 --- a/prnt/hpcups/HPCupsFilter.h
 +++ b/prnt/hpcups/HPCupsFilter.h
-@@ -89,6 +89,7 @@ public:
+@@ -89,6 +89,7 @@
  private:
  
      BYTE            *m_pPrinterBuffer;        

@@ -1,0 +1,11 @@
+--- a/ui4/devmgr5.py
++++ b/ui4/devmgr5.py
+@@ -1024,7 +1024,7 @@
+ 
+                 hplip_conf = configparser.ConfigParser()
+                 fp = open("/etc/hp/hplip.conf", "r")
+-                hplip_conf.readfp(fp)
++                hplip_conf.read_file(fp)
+                 fp.close()
+ 
+                 try:

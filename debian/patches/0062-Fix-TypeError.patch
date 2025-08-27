@@ -12,11 +12,9 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-error-print
  ui5/wifisetupdialog.py | 4 ++--
  4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/clean.py b/clean.py
-index 3d41f04..3a7248e 100755
 --- a/clean.py
 +++ b/clean.py
-@@ -182,7 +182,7 @@ try:
+@@ -182,7 +182,7 @@
                          log.error("Cleaning not needed or supported on this device.")
  
                  except Error as e:
@@ -25,11 +23,9 @@ index 3d41f04..3a7248e 100755
  
              else:
                  log.error("Device is busy or in an error state. Please check device and try again.")
-diff --git a/ui/scrollunload.py b/ui/scrollunload.py
-index fdb48e8..345ed82 100644
 --- a/ui/scrollunload.py
 +++ b/ui/scrollunload.py
-@@ -120,7 +120,7 @@ class ScrollUnloadView(ScrollView):
+@@ -120,7 +120,7 @@
                  self.pc = photocard.PhotoCard(None, self.cur_device.device_uri, self.cur_printer)
              except Error as e:
                  QApplication.restoreOverrideCursor()
@@ -38,11 +34,9 @@ index fdb48e8..345ed82 100644
                  self.cleanup(EVENT_PCARD_UNABLE_TO_MOUNT)
                  return False
  
-diff --git a/ui4/wifisetupdialog.py b/ui4/wifisetupdialog.py
-index 4beb2e9..19b2ce5 100644
 --- a/ui4/wifisetupdialog.py
 +++ b/ui4/wifisetupdialog.py
-@@ -250,7 +250,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
+@@ -329,7 +329,7 @@
              try:
                  self.dev = device.Device(self.device_uri)
              except Error as e:
@@ -51,7 +45,7 @@ index 4beb2e9..19b2ce5 100644
  
                  if self.dev is not None:
                      self.dev.close()
-@@ -828,7 +828,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
+@@ -929,7 +929,7 @@
  
  
      def showIOError(self, e):
@@ -60,11 +54,9 @@ index 4beb2e9..19b2ce5 100644
  
          if self.dev is not None:
              self.dev.close()
-diff --git a/ui5/wifisetupdialog.py b/ui5/wifisetupdialog.py
-index 7fde180..e735650 100644
 --- a/ui5/wifisetupdialog.py
 +++ b/ui5/wifisetupdialog.py
-@@ -253,7 +253,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
+@@ -334,7 +334,7 @@
              try:
                  self.dev = device.Device(self.device_uri)
              except Error as e:
@@ -73,7 +65,7 @@ index 7fde180..e735650 100644
  
                  if self.dev is not None:
                      self.dev.close()
-@@ -834,7 +834,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
+@@ -941,7 +941,7 @@
  
  
      def showIOError(self, e):

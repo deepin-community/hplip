@@ -1,0 +1,47 @@
+--- a/prnt/ps/hp-color_laserjet_mfp_e78635-ps.ppd
++++ b/prnt/ps/hp-color_laserjet_mfp_e78635-ps.ppd
+@@ -786,10 +786,6 @@
+ *HPGuidePageExtraTumble: True
+ *HPManualFeedPrintsOnBottom: True
+ *HPOneCopyOfGuidePage: True
+-@PJL SET HOLDTYPE = PRIVATE"
+-*End
+-@PJL SET HOLDTYPE = PRIVATE"
+-*End
+ *HPCustomJobName Title/Job Name: ""
+ *HPCustomJobName Range: "1 15"
+ *HPCustomJobName Type: "string"
+@@ -1120,7 +1116,7 @@
+ *MediaType Bond/Bond: "<</MediaType (Bond)>> setpagedevice"
+ *MediaType Recycled/Recycled: "<</MediaType (Recycled)>> setpagedevice"
+ *CloseUI: *MediaType
+-*OpenUI *HPPrintQuality/Print Quality: PickOne
++*JCLOpenUI *HPPrintQuality/Print Quality: PickOne
+ *OrderDependency: 5 JCLSetup *HPPrintQuality
+ *DefaultHPPrintQuality: Normal
+ *HPPrintQuality Normal/Normal: "@PJL SET PRINTQUALITY=NORMAL<0A>"
+@@ -1128,7 +1124,7 @@
+ *HPPrintQuality QuickView/Quick View: "@PJL SET PRINTQUALITY=DRAFT<0A>"
+ *HPPrintQuality Economode/Economode: "@PJL SET PRINTQUALITY=DRAFT<0A>@PJL SET ECONOMODE=ON<0A>"
+ *HPPrintQuality Enhanced/Enhanced: "@PJL SET PRINTQUALITY=BEST<0A>"
+-*CloseUI: *HPPrintQuality
++*JCLCloseUI: *HPPrintQuality
+ *CloseGroup: HPPaperQuality
+ *OpenGroup: HPColorOptions/Color
+ *OpenUI *HPEasyColor/HP EasyColor: Boolean
+@@ -1137,13 +1133,13 @@
+ *HPEasyColor True/On: ""
+ *HPEasyColor False/Off: ""
+ *CloseUI: *HPEasyColor
+-*OpenUI *HPColorAsGray/Print in Grayscale: PickOne
++*JCLOpenUI *HPColorAsGray/Print in Grayscale: PickOne
+ *OrderDependency: 20 JCLSetup *HPColorAsGray
+ *DefaultHPColorAsGray: None
+ *HPColorAsGray None/Off: "@PJL SET GRAYSCALE=OFF<0A>@PJL SET PLANESINUSE=3<0A>"
+ *HPColorAsGray BlackInkOnly/Black Only: "@PJL SET PLANESINUSE=1<0A>@PJL SET GRAYSCALE=BLACKONLY<0A>"
+ *HPColorAsGray HighQuality/High Quality CMYK Grayscale: "@PJL SET PLANESINUSE=1<0A>@PJL SET GRAYSCALE=COMPOSITE<0A>"
+-*CloseUI: *HPColorAsGray
++*JCLCloseUI: *HPColorAsGray
+ *OpenUI *HPCMYKInks/CMYK Color: PickOne
+ *OrderDependency: 110 AnySetup *HPCMYKInks
+ *DefaultHPCMYKInks: PrinterDefault

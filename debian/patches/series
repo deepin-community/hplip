@@ -80,7 +80,9 @@
 0080-Workaround-Add-32-bytes-to-allocation-Compressor.patch
 0081-Don-t-start-hp-systray-in-GNOME.patch
 0082-Some-of-the-print-modes-for-DeskJet-815C-are-incorre.patch
-0083-add-format-string-to-snprintf.patch
-0084-take-care-of-implicit-declaration-of-functions.patch
-0085-python-3.12-compat.patch
-
+0084-Replace-readfp-by-read-file.patch
+0085-Fix-hp-color-laserjet-mfp-e78635-ps-ppd.patch
+0086-hplip-use-raw-strings.patch
+implicit-functions.patch
+0088-gcc14-corrections.patch
+0089-correct-invalid-escapes.patch

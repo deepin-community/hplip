@@ -1074,7 +1074,7 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
 
                 hplip_conf = configparser.ConfigParser()
                 fp = open("/etc/hp/hplip.conf", "r")
-                hplip_conf.readfp(fp)
+                hplip_conf.read_file(fp)
                 fp.close()
 
                 try:
@@ -1521,6 +1521,11 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
         self.supplies_headers = [self.__tr(""), self.__tr("Description"),
                                  self.__tr("HP Part No."), self.__tr("Approx. Level"),
                                  self.__tr("Status")]
+        if self.cur_device != None:
+            try:
+                self.cur_device.dq["agent1-type"]
+            except KeyError:
+                self.cur_device.queryDevice()
 
 
     def updateSuppliesTab(self):
@@ -1544,7 +1549,10 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
                         agent_kind = int(self.cur_device.dq['agent%d-kind' % a])
                         agent_sku = self.cur_device.dq['agent%d-sku' % a]
                     except KeyError:
-                        break
+                        if a == 1:
+                            self.cur_device.queryDevice()
+                        else:    
+                            break
                     else:
                         self.cur_device.sorted_supplies.append((a, agent_kind, agent_type, agent_sku))
 
@@ -2254,7 +2262,7 @@ class PasswordDialog(QDialog):
         self.prompt = prompt
 
         Layout= QGridLayout(self)
-        Layout.setMargin(11)
+        Layout.setContentsMargins(10,10,10,10)
         Layout.setSpacing(6)
 
         self.PromptTextLabel = QLabel(self)

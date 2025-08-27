@@ -7,16 +7,14 @@ Subject: In hp-scan's manpage, sort PAGE_SIZES in help,
  scan.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scan.py b/scan.py
-index 864ef2b..0b24e36 100755
 --- a/scan.py
 +++ b/scan.py
-@@ -290,7 +290,7 @@ try:
+@@ -293,7 +293,7 @@
          ("", "Coordinates are relative to the upper left corner of the scan area.", "option", False),
          ("", "Units are specified by -t/--units (default is 'mm').", "option", False),
          ("Specify the scan area based on a paper size:", "--size=<paper size name>", "option", False),
 -        ("", "where <paper size name> is one of: %s" % ', '.join(list(PAGE_SIZES.keys())), "option", False),
 +        ("", "where <paper size name> is one of: %s" % ', '.join(sorted(list(PAGE_SIZES.keys()))), "option", False),
+         ("Crop out edges from the scan area:", "--edge_erase_value=<border crop value in inch>", "option", False),
+         ("", "where <border crop value in inch> is in range of: [0-1]inch", "option", False),
          utils.USAGE_SPACE,
-         ("[OPTIONS] ('file' dest)", "", "header", False),
-         ("Filename for 'file' destination:", "-o<file> or -f<file> or --file=<file> or --output=<file>", "option", False),

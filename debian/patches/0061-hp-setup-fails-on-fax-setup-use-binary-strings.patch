@@ -8,11 +8,9 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-use-binary-
  fax/pmlfax.py | 8 ++++----
  2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/base/utils.py b/base/utils.py
-index bfe985c..880a9b5 100644
 --- a/base/utils.py
 +++ b/base/utils.py
-@@ -958,10 +958,7 @@ else:
+@@ -958,10 +958,7 @@
  
  
  def printable(s):
@@ -24,11 +22,9 @@ index bfe985c..880a9b5 100644
  
  
  def any(S,f=lambda x:x):
-diff --git a/fax/pmlfax.py b/fax/pmlfax.py
-index 78d9135..b1020d0 100644
 --- a/fax/pmlfax.py
 +++ b/fax/pmlfax.py
-@@ -143,8 +143,8 @@ class PMLFaxDevice(FaxDevice):
+@@ -145,8 +145,8 @@
  
      def getPhoneNum(self):
          if PY3:
@@ -39,7 +35,7 @@ index 78d9135..b1020d0 100644
          else:
              return utils.printable(self.getPML(pml.OID_FAX_LOCAL_PHONE_NUM)[1])
      phone_num = property(getPhoneNum, setPhoneNum, doc="OID_FAX_LOCAL_PHONE_NUM")
-@@ -155,8 +155,8 @@ class PMLFaxDevice(FaxDevice):
+@@ -157,8 +157,8 @@
  
      def getStationName(self):
          if PY3:
