@@ -406,7 +406,7 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
 
             if not self.printer_accepting:
                 self.cur_device.sendEvent(EVENT_PRINTER_QUEUE_REJECTING_JOBS, self.cur_printer)
-
+        self.updateCurrentTab() #when we have a device present initailly, we should always update the current tab to show action items
 
     def activateDevice(self, device_uri):
         log.debug(log.bold("Activate: %s %s %s" % ("*"*20, device_uri, "*"*20)))
@@ -818,6 +818,8 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
 
 
     def updateWindowTitle(self):
+        if self.cur_device is None or self.cur_printer is None:
+            return
         if self.cur_device.device_type == DEVICE_TYPE_FAX:
                 self.setWindowTitle(self.__tr("HP Device Manager - %s (Fax)"%self.cur_device.model_ui))
         else:
@@ -859,7 +861,7 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
                 self.Tabs.setTabText(self.Tabs.indexOf(self.Control), QApplication.translate("MainWindow", "Fax Control", None))
 
 
-    def DeviceList_currentChanged(self, i,  j):
+    def DeviceList_currentChanged(self, i, j):
         if i is not None and not self.updating:
             self.cur_device_uri = self.DeviceList.currentItem().device_uri
             self.cur_device = device_list[self.cur_device_uri]
@@ -1060,8 +1062,7 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
                 fax = d.fax_type > FAX_TYPE_NONE and prop.fax_build and d.device_type == DEVICE_TYPE_FAX and \
                     sys.hexversion >= 0x020300f0 and avail
                 printer = d.device_type == DEVICE_TYPE_PRINTER and avail
-                scan = d.scan_type > SCAN_TYPE_NONE and prop.scan_build and \
-                        printer and self.user_settings.cmd_scan
+                scan = d.scan_type > SCAN_TYPE_NONE and prop.scan_build and printer and self.user_settings.cmd_scan
                 cpy = d.copy_type > COPY_TYPE_NONE and printer
                 req_plugin = d.plugin == PLUGIN_REQUIRED
                 opt_plugin = d.plugin == PLUGIN_OPTIONAL
@@ -1851,7 +1852,7 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
             self.InstallLatestButton.setEnabled(True)
         else:
             self.InstallLatestButton_lock = True
-            utils.openURL("http://hplipopensource.com/hplip-web/install/manual/index.html")
+            utils.openURL("https://developers.hp.com/hp-linux-imaging-and-printing/install/manual/index.html")
             QTimer.singleShot(1000, self.InstallLatestButton_unlock)
 
 
@@ -1879,6 +1880,8 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):
 
 
     def updatePrintControlTab(self):
+        if self.cur_device is None or self.cur_printer is None:
+            return
         if self.cur_device.device_type == DEVICE_TYPE_PRINTER:
             self.PrintControlPrinterNameLabel.setText(self.__tr("Printer Name:"))
             self.groupBox.setTitle(QApplication.translate("MainWindow", "Printer Queue Control", None))

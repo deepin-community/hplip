@@ -7,9 +7,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-snmp-quirks
  prnt/drv/hpcups.drv.in | 4 ++++
  1 file changed, 4 insertions(+)
 
+diff --git a/prnt/drv/hpcups.drv.in b/prnt/drv/hpcups.drv.in
+index e3dab68..8af68b2 100644
 --- a/prnt/drv/hpcups.drv.in
 +++ b/prnt/drv/hpcups.drv.in
-@@ -10445,6 +10445,8 @@
+@@ -10501,6 +10501,8 @@ Manufacturer "HP"
        Attribute "NickName" "" "HP Officejet Pro 8500 a909a, hpcups $Version"
        Attribute "ShortNickName" "" "HP OJ Pro 8500 a909a hpijs"
        Attribute "1284DeviceID" "" "MFG:HP;MDL:officejet pro 8500 a909a;DES:officejet pro 8500 a909a;"
@@ -18,7 +20,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-snmp-quirks
        PCFileName "hp-officejet_pro_8500_a909a.ppd"
        Attribute "Product" "" "(HP Officejet Pro 8500 All-in-one Printer - a909a)"
      }
-@@ -10453,6 +10455,8 @@
+@@ -10509,6 +10511,8 @@ Manufacturer "HP"
        Attribute "NickName" "" "HP Officejet Pro 8500 a909g, hpcups $Version"
        Attribute "ShortNickName" "" "HP OJ Pro 8500 a909g hpijs"
        Attribute "1284DeviceID" "" "MFG:HP;MDL:officejet pro 8500 a909g;DES:officejet pro 8500 a909g;"

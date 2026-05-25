@@ -17,10 +17,10 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-missing-lin
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/installer/pluginhandler.py b/installer/pluginhandler.py
-index edc7295..fece028 100755
+index a37db39..ec55bd5 100755
 --- a/installer/pluginhandler.py
 +++ b/installer/pluginhandler.py
-@@ -167,7 +167,7 @@ class PluginHandle(object):
+@@ -160,7 +160,7 @@ class PluginHandle(object):
                          continue
                      if link != "":
                          if not utils.check_library(link):

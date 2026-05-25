@@ -6,13 +6,15 @@ Subject: =?utf-8?q?Fix_some_typos_in_BUG=C2=A0and_DBG=C2=A0messages?=
  common/utils.c             | 4 ++--
  prnt/backend/hp.c          | 2 +-
  prnt/hpcups/LJZjStream.cpp | 2 +-
- protocol/hp_ipp.c          | 4 ++--
+ protocol/hp_ipp.c          | 8 ++++----
  scan/sane/saneopts.h       | 2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
+ 5 files changed, 9 insertions(+), 9 deletions(-)
 
+diff --git a/common/utils.c b/common/utils.c
+index f5b1482..8e77bb4 100644
 --- a/common/utils.c
 +++ b/common/utils.c
-@@ -252,7 +252,7 @@
+@@ -276,7 +276,7 @@ void *get_library_symbol(void *pLibHandler, const char *szSymbol)
      void *pSymHandler = NULL;
      if (pLibHandler == NULL)
      {
@@ -21,7 +23,7 @@ Subject: =?utf-8?q?Fix_some_typos_in_BUG=C2=A0and_DBG=C2=A0messages?=
          return NULL;
      }
  
-@@ -274,7 +274,7 @@
+@@ -298,7 +298,7 @@ void unload_library(void *pLibHandler)
      if (pLibHandler)
          dlclose(pLibHandler);
      else
@@ -30,9 +32,11 @@ Subject: =?utf-8?q?Fix_some_typos_in_BUG=C2=A0and_DBG=C2=A0messages?=
  }
  
  int createTempFile(char* szFileName, FILE** pFilePtr)
+diff --git a/prnt/backend/hp.c b/prnt/backend/hp.c
+index 07713b2..066866e 100644
 --- a/prnt/backend/hp.c
 +++ b/prnt/backend/hp.c
-@@ -666,7 +666,7 @@
+@@ -666,7 +666,7 @@ static void save_out_file(int fd, int copies, FILE * temp_fp)
  
     if (NULL == temp_fp)
     {
@@ -41,9 +45,11 @@ Subject: =?utf-8?q?Fix_some_typos_in_BUG=C2=A0and_DBG=C2=A0messages?=
         return;
     }
  
+diff --git a/prnt/hpcups/LJZjStream.cpp b/prnt/hpcups/LJZjStream.cpp
+index 9b06cf8..45a0c7a 100644
 --- a/prnt/hpcups/LJZjStream.cpp
 +++ b/prnt/hpcups/LJZjStream.cpp
-@@ -685,7 +685,7 @@
+@@ -685,7 +685,7 @@ DRIVER_ERROR LJZjStream::preProcessRasterData(cups_raster_t **ppcups_raster, cup
  		return  NO_ERROR;                                  
      }    
  
@@ -52,26 +58,34 @@ Subject: =?utf-8?q?Fix_some_typos_in_BUG=C2=A0and_DBG=C2=A0messages?=
  
      memcpy(&cups_header, firstpage_cups_header, sizeof(cups_page_header2_t));
  
+diff --git a/protocol/hp_ipp.c b/protocol/hp_ipp.c
+index 6e60ac0..03f6cf2 100644
 --- a/protocol/hp_ipp.c
 +++ b/protocol/hp_ipp.c
-@@ -1121,7 +1121,7 @@
+@@ -1121,8 +1121,8 @@ enum HPMUD_RESULT readChannel(raw_ipp *responseptr, HPMUD_DEVICE hd, HPMUD_CHANN
          {
              if (memcmp(&data[*size - CHUNK_DELIMITER_LENGTH], CHUNK_DELIMITER, CHUNK_DELIMITER_LENGTH) == 0)
              {
 -                DBG("Chunk end recieved....\n");
+-                break;
 +                DBG("Chunk end received....\n");
-                 break;
++                break;        
              }
          }
-@@ -1130,7 +1130,7 @@
+         else
+@@ -1130,8 +1130,8 @@ enum HPMUD_RESULT readChannel(raw_ipp *responseptr, HPMUD_DEVICE hd, HPMUD_CHANN
              bytes_remaining -= bytes_read;
              if (bytes_remaining == 0)
              {
 -                DBG("Complete unchunked data recieved....\n");
+-                break;
 +                DBG("Complete unchunked data received....\n");
-                 break;
++                break;   
              }
          }
+     }
+diff --git a/scan/sane/saneopts.h b/scan/sane/saneopts.h
+index fcc460f..2d5a701 100755
 --- a/scan/sane/saneopts.h
 +++ b/scan/sane/saneopts.h
 @@ -133,7 +133,7 @@

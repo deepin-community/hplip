@@ -24,6 +24,8 @@ import os
 import os.path
 import locale
 import stat
+import subprocess
+import shlex
 
 #Local
 from . import logger
@@ -32,9 +34,26 @@ log = logger.Logger('', logger.Logger.LOG_LEVEL_INFO, logger.Logger.LOG_TO_CONSO
 
 def execute(cmd):
     if cmd:
-        return os.system(cmd)
+        try:
+            # Use shlex.split to safely split the command into arguments
+            args = shlex.split(cmd)
+            process = subprocess.Popen(args,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            process.wait()
+            stdout, stderr = process.communicate()
+            log.debug(f"Command executed: {cmd}\n{stdout.decode()}") 
+            if process.returncode != 0:
+                error_message = f"Command failed with return code {process.returncode}: {cmd}\n{stderr.decode()}"
+                log.error(error_message)
+            return process.returncode
+        except subprocess.CalledProcessError as e:
+            error_message = f"Command failed with return code {e.returncode}: {cmd}\n{e.stderr.decode()}"
+            log.error(error_message)
+            return e.returncode
+        except Exception as e:
+            log.error(f"Error executing command: {cmd}\n{str(e)}")
+            return 127
     else:
-        log.error("Command not found \n" % cmd)
+        log.error(f"Command not found: {cmd}\n")
         return 127
 
 

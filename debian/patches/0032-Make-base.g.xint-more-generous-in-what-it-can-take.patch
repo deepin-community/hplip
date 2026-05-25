@@ -9,9 +9,11 @@ Closes: #912765
  base/g.py | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/base/g.py b/base/g.py
+index 445372d..bb34d6c 100644
 --- a/base/g.py
 +++ b/base/g.py
-@@ -333,9 +333,9 @@
+@@ -333,9 +333,9 @@ def cleanup_spinner():
  # Convert string to int and return a list.
  def xint(ver):
      try:

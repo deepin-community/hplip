@@ -8,7 +8,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-hpfax-impor
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fax/backend/hpfax.py b/fax/backend/hpfax.py
-index 2514e78..95ff135 100755
+index cf2938f..42c1951 100755
 --- a/fax/backend/hpfax.py
 +++ b/fax/backend/hpfax.py
 @@ -89,7 +89,7 @@ try:

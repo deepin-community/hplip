@@ -10,7 +10,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-m278-m281-n
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/data/models/models.dat b/data/models/models.dat
-index b413b9c..4c0254a 100644
+index f95df41..eb444ba 100644
 --- a/data/models/models.dat
 +++ b/data/models/models.dat
 @@ -61977,8 +61977,8 @@ model11=HP Color LaserJet Pro MFP M280c2

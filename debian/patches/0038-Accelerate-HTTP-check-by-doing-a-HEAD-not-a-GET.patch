@@ -3,14 +3,14 @@ Date: Thu, 19 Sep 2019 08:47:34 +0200
 Subject: =?utf-8?q?Accelerate_HTTP=C2=A0check_by_doing_a_HEAD=2C_not_a_GET?=
 
 ---
- base/utils.py | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ base/utils.py | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/base/utils.py b/base/utils.py
-index c9daa62..bfe985c 100644
+index e6b5532..e927ccf 100644
 --- a/base/utils.py
 +++ b/base/utils.py
-@@ -2249,12 +2249,14 @@ def check_library( so_file_path):
+@@ -2280,12 +2280,14 @@ def check_library( so_file_path):
      return ret_val
  
  
@@ -26,7 +26,7 @@ index c9daa62..bfe985c 100644
          log.debug(cmd)
          status, output = run(cmd)
          log.debug("wget returned: %d" % status)
-@@ -2262,12 +2264,14 @@ def download_via_wget(target):
+@@ -2293,12 +2295,14 @@ def download_via_wget(target):
          log.debug("wget not found")
      return status
  
@@ -42,15 +42,25 @@ index c9daa62..bfe985c 100644
          log.debug(cmd)
          status, output = run(cmd)
          log.debug("curl returned: %d" % status)
-@@ -2289,9 +2293,9 @@ def check_network_via_ping(target):
+@@ -2319,14 +2323,13 @@ def check_network_via_ping(target):
+         log.debug("ping not found")
      return status
  
- def check_network_connection(url=HTTP_CHECK_TARGET, ping_server=PING_CHECK_TARGET):
--    status = download_via_wget(url)
+-def check_network_connection(host = "www.hp.com", port=80):
+-    import socket
+-    try:
+-        socket.setdefaulttimeout(10)
+-        socket.create_connection((host, port))
+-        return True
+-    except OSError:
+-        return False
++def check_network_connection(url=HTTP_CHECK_TARGET, ping_server=PING_CHECK_TARGET):
 +    status = download_via_wget(url, head=True)
-     if (status != 0):
--        status = download_via_curl(url)
++    if (status != 0):
 +        status = download_via_curl(url, head=True)
-         if (status != 0):
-             status = check_network_via_ping(ping_server)
-     return (status == 0)
++        if (status != 0):
++            status = check_network_via_ping(ping_server)
++    return (status == 0)
+ 
+ #Expands '*' in File/Dir names.
+ def expandList(Files_List, prefix_dir=None):

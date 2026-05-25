@@ -1,0 +1,23 @@
+From: Thorsten Alteholz <debian@alteholz.de>
+Date: Sat, 15 Feb 2025 20:01:10 +0100
+Subject: Makefile.am Install D-Bus policy in usr not etc
+
+---
+ Makefile.am | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index ef79860..04511c3 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -451,8 +451,8 @@ endif
+ endif #HPLIP_CLASS_DRIVER
+ # PolicyKit
+ if POLICYKIT_INSTALL
+-policykit_dbus_etcdir = /etc/dbus-1/system.d
+-dist_policykit_dbus_etc_DATA = data/policykit/com.hp.hplip.conf
++policykit_dbus_confdir = /usr/share/dbus-1/system.d
++dist_policykit_dbus_conf_DATA = data/policykit/com.hp.hplip.conf
+ policykit_dbus_sharedir = /usr/share/dbus-1/system-services
+ dist_policykit_dbus_share_DATA = data/policykit/com.hp.hplip.service
+ policykit_policydir = $(policykit_dir)

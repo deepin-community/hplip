@@ -7,9 +7,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-wifisetup.p
  ui5/wifisetupdialog.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/ui5/wifisetupdialog.py b/ui5/wifisetupdialog.py
+index 874822e..4b44b34 100644
 --- a/ui5/wifisetupdialog.py
 +++ b/ui5/wifisetupdialog.py
-@@ -664,7 +664,7 @@
+@@ -664,7 +664,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
                  self.ip,_,addressmode, subnetmask, gateway, pridns, sec_dns= self.wifiObj.getIPConfiguration(self.dev, self.adapterName)
                  if self.ip == "0.0.0.0":
                      if not self.wifiObj == CdmWifi:

@@ -1,0 +1,21 @@
+From: Thorsten Alteholz <debian@alteholz.de>
+Date: Tue, 11 Feb 2025 00:25:49 +0100
+Subject: Use read_file instead of readfp for python 3.12
+
+---
+ ui4/devmgr5.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ui4/devmgr5.py b/ui4/devmgr5.py
+index fc28445..980dad4 100644
+--- a/ui4/devmgr5.py
++++ b/ui4/devmgr5.py
+@@ -1024,7 +1024,7 @@ class DevMgr5(QMainWindow,  Ui_MainWindow):
+ 
+                 hplip_conf = configparser.ConfigParser()
+                 fp = open("/etc/hp/hplip.conf", "r")
+-                hplip_conf.readfp(fp)
++                hplip_conf.read_file(fp)
+                 fp.close()
+ 
+                 try:

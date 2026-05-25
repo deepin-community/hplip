@@ -10,7 +10,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-log-stderr.
  2 files changed, 12 insertions(+), 3 deletions(-)
 
 diff --git a/fax/backend/hpfax.py b/fax/backend/hpfax.py
-index b540734..2514e78 100755
+index 389ec69..cf2938f 100755
 --- a/fax/backend/hpfax.py
 +++ b/fax/backend/hpfax.py
 @@ -55,7 +55,10 @@ home_dir = ''

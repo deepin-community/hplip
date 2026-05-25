@@ -10,7 +10,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-strncpy.pat
  3 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/prnt/hpcups/HPCupsFilter.cpp b/prnt/hpcups/HPCupsFilter.cpp
-index 322bdaa..f0ad0eb 100644
+index 96b8f33..7036289 100644
 --- a/prnt/hpcups/HPCupsFilter.cpp
 +++ b/prnt/hpcups/HPCupsFilter.cpp
 @@ -211,6 +211,7 @@ HPCupsFilter::HPCupsFilter() : m_pPrinterBuffer(NULL)
@@ -32,8 +32,8 @@ index 322bdaa..f0ad0eb 100644
 +        strncpy(m_JA.media_attributes.MediaTypeName, cups_header->MediaType, sizeof(m_JA.media_attributes.MediaTypeName)-1);
 +        strncpy(m_JA.quality_attributes.hbpl1_print_quality, cups_header->OutputType, sizeof(m_JA.quality_attributes.hbpl1_print_quality)-1);
          m_JA.color_mode = cups_header->cupsRowStep;
-     }
-     else {
+ 
+         if (m_JA.media_attributes.PageSizeName[0] == '\0') {
 diff --git a/prnt/hpijs/hpijs.cpp b/prnt/hpijs/hpijs.cpp
 index 8ad7cf2..9c7f7a2 100644
 --- a/prnt/hpijs/hpijs.cpp

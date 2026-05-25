@@ -8,7 +8,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-avahi-parsi
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/base/avahi.py b/base/avahi.py
-index 4749978..85c64fe 100755
+index 51795dd..dd9c790 100755
 --- a/base/avahi.py
 +++ b/base/avahi.py
 @@ -52,9 +52,14 @@ def detectNetworkDevices(ttl=4, timeout=10):

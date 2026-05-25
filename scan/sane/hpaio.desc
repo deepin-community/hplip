@@ -274,6 +274,48 @@
 :model "HP Color LaserJet MFP m377 Fnw"
 :status :good
 
+:model "HP Color LaserJet Pro 3288dn"
+:status :good
+
+:model "HP Color LaserJet Pro 3288dw"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3302fdn"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3302fdne"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3302fdw"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3302fdwe"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3302sdw"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3302sdwe"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3303fdn"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3303fdw"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3303sdw"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3388fdn"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3388fdw"
+:status :good
+
+:model "HP Color LaserJet Pro MFP 3388sdw"
+:status :good
+
 :model "HP Color LaserJet Pro MFP 4301cdw"
 :status :good
 
@@ -613,6 +655,12 @@
 :model "HP Deskjet 2800e All-in-one Printer Series"
 :status :good
 
+:model "HP Deskjet 2900 All-in-one Printer Series"
+:status :good
+
+:model "HP Deskjet 2900e All-in-one Printer Series"
+:status :good
+
 :model "HP Deskjet 3050 j610 Series"
 :status :good
 
@@ -701,6 +749,12 @@
 :status :good
 
 :model "HP Deskjet 4200e All-in-one Printer Series"
+:status :good
+
+:model "HP Deskjet 4300 All-in-one Printer Series"
+:status :good
+
+:model "HP Deskjet 4300e All-in-one Printer Series"
 :status :good
 
 :model "HP Deskjet f2110 All-in-one Printer"
@@ -1060,6 +1114,9 @@
 :model "HP Deskjet Ink Advantage 2800 All-in-one Printer Series"
 :status :good
 
+:model "HP Deskjet Ink Advantage 2900 All-in-one Printer Series"
+:status :good
+
 :model "HP Deskjet Ink Advantage 3515 E-all-in-one"
 :status :good
 
@@ -1112,6 +1169,9 @@
 :status :good
 
 :model "HP Deskjet Ink Advantage 4200 All-in-one Printer Series"
+:status :good
+
+:model "HP Deskjet Ink Advantage 4300 All-in-one Printer Series"
 :status :good
 
 :model "HP Deskjet Ink Advantage 4515 E-all-in-one Printer"
@@ -1204,10 +1264,16 @@
 :model "HP Deskjet Ink Advantage Ultra 4800 All-in-one Printer Series"
 :status :good
 
+:model "HP Deskjet Ink Advantage Ultra 5100 All-in-one Printer Series"
+:status :good
+
 :model "HP Deskjet Ink Advantage Ultra 5738 All-in-one Printer"
 :status :good
 
 :model "HP Deskjet Ink Advantage Ultra 5739 All-in-one Printer"
+:status :good
+
+:model "HP Deskjet Ink Advantage Ultra 5800 All-in-one Printer Series"
 :status :good
 
 :model "HP Deskjet Plus 4100 All-in-one Printer Series"
@@ -1217,6 +1283,84 @@
 :status :good
 
 :model "HP Deskjet Plus 6400 Series"
+:status :good
+
+:model "HP Deskjet Plus Ink Advantage 6100 Series"
+:status :good
+
+:model "HP Deskjet Plus Ink Advantage 6500 Series"
+:status :good
+
+:model "HP Dex Color MFP d57945"
+:status :good
+
+:model "HP Dex Color MFP d677"
+:status :good
+
+:model "HP Dex Color MFP d67755"
+:status :good
+
+:model "HP Dex Color MFP d67765"
+:status :good
+
+:model "HP Dex Color MFP d786"
+:status :good
+
+:model "HP Dex Color MFP d78625"
+:status :good
+
+:model "HP Dex Color MFP d78630"
+:status :good
+
+:model "HP Dex Color MFP d78635"
+:status :good
+
+:model "HP Dex Color MFP d877"
+:status :good
+
+:model "HP Dex Color MFP d87740"
+:status :good
+
+:model "HP Dex Color MFP d87750"
+:status :good
+
+:model "HP Dex Color MFP d87760"
+:status :good
+
+:model "HP Dex Color MFP d87770"
+:status :good
+
+:model "HP Dex MFP d42540"
+:status :good
+
+:model "HP Dex MFP d52645"
+:status :good
+
+:model "HP Dex MFP d53052dn"
+:status :good
+
+:model "HP Dex MFP d731"
+:status :good
+
+:model "HP Dex MFP d73130"
+:status :good
+
+:model "HP Dex MFP d73135"
+:status :good
+
+:model "HP Dex MFP d73140"
+:status :good
+
+:model "HP Dex MFP d826"
+:status :good
+
+:model "HP Dex MFP d82640"
+:status :good
+
+:model "HP Dex MFP d82650"
+:status :good
+
+:model "HP Dex MFP d82660"
 :status :good
 
 :model "HP Digital Sender Flow 8500 fn2 Document Capture Workstation"
@@ -1363,7 +1507,13 @@
 :model "HP Envy 6000 Series"
 :status :good
 
+:model "HP Envy 6100 Series"
+:status :good
+
 :model "HP Envy 6400 Series"
+:status :good
+
+:model "HP Envy 6500 Series"
 :status :good
 
 :model "HP Envy 7640 E-all-in-one"
@@ -1414,6 +1564,9 @@
 :model "HP Envy Photo 7164 All-in-one"
 :status :good
 
+:model "HP Envy Photo 7200 Series"
+:status :good
+
 :model "HP Envy Photo 7800 All-in-one"
 :status :good
 
@@ -1424,6 +1577,9 @@
 :status :good
 
 :model "HP Envy Photo 7855 All-in-one"
+:status :good
+
+:model "HP Envy Photo 7900 Series"
 :status :good
 
 :model "HP Envy Pro 6400 Series"
@@ -1666,6 +1822,12 @@
 :model "HP LaserJet 9065 Multifunction Printer"
 :status :good
 
+:model "HP LaserJet Enterprise Flow MFP 5602"
+:status :good
+
+:model "HP LaserJet Enterprise Flow MFP 6600zfw"
+:status :good
+
 :model "HP LaserJet Enterprise Flow MFP m528c"
 :status :good
 
@@ -1676,6 +1838,30 @@
 :status :good
 
 :model "HP LaserJet Enterprise Flow MFP m630z"
+:status :good
+
+:model "HP LaserJet Enterprise Flow MFP x53052"
+:status :good
+
+:model "HP LaserJet Enterprise Flow MFP x62757zs"
+:status :good
+
+:model "HP LaserJet Enterprise MFP 5601"
+:status :good
+
+:model "HP LaserJet Enterprise MFP 5601dn"
+:status :good
+
+:model "HP LaserJet Enterprise MFP 5602dn"
+:status :good
+
+:model "HP LaserJet Enterprise MFP 5602f"
+:status :good
+
+:model "HP LaserJet Enterprise MFP 6600"
+:status :good
+
+:model "HP LaserJet Enterprise MFP 6600dn"
 :status :good
 
 :model "HP LaserJet Enterprise MFP m430f"
@@ -1697,6 +1883,24 @@
 :status :good
 
 :model "HP LaserJet Enterprise MFP m630h"
+:status :good
+
+:model "HP LaserJet Enterprise MFP x52952"
+:status :good
+
+:model "HP LaserJet Enterprise MFP x52952dn"
+:status :good
+
+:model "HP LaserJet Enterprise MFP x53052"
+:status :good
+
+:model "HP LaserJet Enterprise MFP x53052dn"
+:status :good
+
+:model "HP LaserJet Enterprise MFP x62757"
+:status :good
+
+:model "HP LaserJet Enterprise MFP x62757dn"
 :status :good
 
 :model "HP LaserJet m1005 Multifunction Printer"
@@ -2065,7 +2269,16 @@
 :model "HP LaserJet Pro MFP m126a"
 :status :good
 
+:model "HP LaserJet Pro MFP m126a Plus"
+:status :good
+
 :model "HP LaserJet Pro MFP m126nw"
+:status :good
+
+:model "HP LaserJet Pro MFP m126nw Plus"
+:status :good
+
+:model "HP LaserJet Pro MFP m126snw Plus"
 :status :good
 
 :model "HP LaserJet Pro MFP m127fn"
@@ -2953,6 +3166,9 @@
 :model "HP Officejet 9120 All-in-one Printer"
 :status :good
 
+:model "HP Officejet 9120 Series"
+:status :good
+
 :model "HP Officejet 9130 All-in-one Printer"
 :status :good
 
@@ -3286,10 +3502,19 @@
 :model "HP Officejet Pro 8740 All-in-one Printer"
 :status :good
 
+:model "HP Officejet Pro 9120 Series"
+:status :good
+
 :model "HP Officejet Pro 9120b Series"
 :status :good
 
+:model "HP Officejet Pro 9130 Series"
+:status :good
+
 :model "HP Officejet Pro 9130b Series"
+:status :good
+
+:model "HP Officejet Pro 9130e Series"
 :status :good
 
 :model "HP Officejet Pro 9720 Series"

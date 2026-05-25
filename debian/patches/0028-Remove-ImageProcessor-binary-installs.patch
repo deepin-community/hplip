@@ -6,9 +6,11 @@ Subject: Remove ImageProcessor binary installs
  Makefile.am | 19 ++-----------------
  1 file changed, 2 insertions(+), 17 deletions(-)
 
+diff --git a/Makefile.am b/Makefile.am
+index ca988d3..f68de15 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -167,8 +167,7 @@
+@@ -167,8 +167,7 @@ if !HPLIP_CLASS_DRIVER
  dist_hplip_SCRIPTS = hpssd.py __init__.py hpdio.py
  endif #HPLIP_CLASS_DRIVER
  
@@ -18,7 +20,7 @@ Subject: Remove ImageProcessor binary installs
  dist_noinst_DATA += prnt/ipp-usb/HPLIP.conf
  dist_noinst_SCRIPTS += dat2drv.py install.py  hplip-install init-suse-firewall init-iptables-firewall class_rpm_build.sh hplipclassdriver.spec createPPD.sh Makefile_dat2drv hpijs-drv
  
-@@ -597,7 +596,7 @@
+@@ -598,7 +597,7 @@ hpcups_SOURCES = prnt/hpcups/HPCupsFilter.cpp prnt/hpcups/HPCupsFilter.h prnt/hp
  	prnt/hpcups/ImageProcessor.h
  
  hpcups_CXXFLAGS = $(APDK_ENDIAN_FLAG) $(DBUS_CFLAGS)
@@ -27,7 +29,7 @@ Subject: Remove ImageProcessor binary installs
  #else
  #hpcupsdir = $(cupsfilterdir)
  #hpcups_PROGRAMS = hpcups
-@@ -697,20 +696,6 @@
+@@ -698,20 +697,6 @@ endif #HPLIP_CLASS_DRIVER
  
  install-data-hook:
  if HPLIP_BUILD

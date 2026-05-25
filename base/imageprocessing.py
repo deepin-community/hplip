@@ -725,23 +725,23 @@ def merge_PDF_viewer(output,ocr):
 
         if os.path.isfile(output_ocr):
             log.debug("OCR successful")
-            cmd = pdf_viewer + "  " + output_ocr + " " + "&"
+            cmd = pdf_viewer + "  " + output_ocr 
             #OCR was successful so delete the non-ocr original output
             os.unlink(output)
         else:
             log.debug("OCR failed to generate, returning original file")
-            cmd = pdf_viewer + "  " + output + " " + "&"
+            cmd = pdf_viewer + "  " + output
         
         os_utils.execute(cmd)
     else:
         log.debug("OCR was not called, returning original file")
-        cmd = pdf_viewer + "  " + output + " " + "&"           
+        cmd = pdf_viewer + "  " + output           
         os_utils.execute(cmd)
 
 def check_pil():
     scanjet_flag = None
     try:
-        import PIL	
+        import PIL
     except ImportError as error:
         scanjet_flag=str(error)
 		#.split(' ')[-1]
@@ -752,7 +752,7 @@ def check_pil():
 def check_numpy():
     scanjet_flag = None
     try:
-        import numpy as np	
+        import numpy as np
     except ImportError as error:
         scanjet_flag=str(error)
 		#.split(' ')[-1]
@@ -763,7 +763,7 @@ def check_numpy():
 def check_opencv():
     scanjet_flag = None
     try:
-        import cv2	
+        import cv2
     except ImportError as error:
         scanjet_flag=str(error)
 		#.split(' ')[-1]
@@ -774,10 +774,10 @@ def check_opencv():
 def check_pypdfocr():
     scanjet_flag = None
     try:
-        import pypdfocr	
+        import pypdfocr
     except:
         try:
-            import ocrmypdf	
+            import ocrmypdf
         except:
             scanjet_flag=str("Error occurred")
     return scanjet_flag
@@ -785,7 +785,7 @@ def check_pypdfocr():
 def check_skimage():
     scanjet_flag = None
     try:
-        import skimage	
+        import skimage
     except ImportError as error:
         scanjet_flag=str(error)
 		
@@ -815,7 +815,7 @@ def check_tesserocr_imutils():
 def check_pypdf2():
     scanjet_flag = None
     try:
-        import PyPDF2	
+        import PyPDF2
     except ImportError as error:
         scanjet_flag=str(error)
 		#.split(' ')[-1]
@@ -829,7 +829,7 @@ def check_zbar():
     num = pyPlatform.split('.')   
     if num[0] < '3':
         try:
-            import zbar	
+            import zbar
         except ImportError as error:
             scanjet_flag=str(error)
 			#.split(' ')[-1]
@@ -1138,3 +1138,31 @@ def get_tesseract_version():
         #log.debug('Failed to extract tesseract version from executable: {}'.format(e))
         return 0
 
+#convert grayscale images to 1bit black and white
+def convert_to_BW(im,threshold=200):
+    print("Converting to BW")
+    #Apply threshold to create a monochrome image 
+    fn = lambda x:255 if x > threshold else 0
+    monochrome_image = im.point(fn, mode='1')
+    return monochrome_image
+
+#resize the image to the scan area
+def resize_to_scan_area(im,size,res):
+    from PIL import Image
+    #print("Resizing to scan area")
+    brx,bry,_desc,unit = size
+    #print("brx , bry = ", brx,bry)
+    if unit == 'mm':
+        brx = int(brx * 0.03937*int(res))
+        bry = int(bry * 0.03937*int(res))
+    if unit == 'in':
+        brx = int(brx*int(res))
+        bry = int(bry*int(res))
+    #print("brx, bry in px = ",brx,bry)
+    #resize the image to the scan area
+    try:
+        im = im.resize((brx,bry), Image.ANTIALIAS)
+    except AttributeError:
+        im = im.resize((brx, bry), Image.Resampling.LANCZOS)
+
+    return im

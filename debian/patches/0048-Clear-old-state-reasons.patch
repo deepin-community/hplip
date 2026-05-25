@@ -7,9 +7,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-clear-old-s
  prnt/hpcups/HPCupsFilter.cpp | 7 +++++++
  1 file changed, 7 insertions(+)
 
+diff --git a/prnt/hpcups/HPCupsFilter.cpp b/prnt/hpcups/HPCupsFilter.cpp
+index 060bfc8..b0db892 100644
 --- a/prnt/hpcups/HPCupsFilter.cpp
 +++ b/prnt/hpcups/HPCupsFilter.cpp
-@@ -586,6 +586,13 @@
+@@ -593,6 +593,13 @@ int HPCupsFilter::StartPrintJob(int  argc, char *argv[])
  
      signal(SIGTERM, HPCancelJob);
  
