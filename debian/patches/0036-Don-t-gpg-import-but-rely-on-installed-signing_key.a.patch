@@ -7,14 +7,14 @@ Subject: Don't gpg --import, but rely on installed signing_key.asc
  1 file changed, 4 insertions(+), 6 deletions(-)
 
 diff --git a/base/validation.py b/base/validation.py
-index d555f12..dfea16c 100644
+index e1ce925..dfea16c 100644
 --- a/base/validation.py
 +++ b/base/validation.py
 @@ -42,9 +42,7 @@ class DigiSign_Verification(object):
  
  
  class GPG_Verification(DigiSign_Verification):
--    def __init__(self, pgp_site = 'pgp.mit.edu', key = 0x4ABA2F66DBD5A95894910E0673D770CDA59047B9):
+-    def __init__(self, pgp_site = 'hkp://keyserver.ubuntu.com:80', key = 0x82FFA7C6AA7411D934BDE173AC69536A2CF3A243):
 -        self.__pgp_site = pgp_site
 -        self.__key = key
 +    def __init__(self):

@@ -1,6 +1,5 @@
 #usr/bin/hp-mkuri
 #usr/bin/hp-unload
-etc/dbus-1
 usr/bin/hp-align
 usr/bin/hp-check
 usr/bin/hp-clean
@@ -22,6 +21,7 @@ usr/bin/hp-testpage
 usr/bin/hp-timedate
 usr/lib/cups/backend
 usr/lib/cups/filter/pstotiff
+usr/lib/cups/filter/hpcdmfax
 usr/lib/python*
 usr/share/cups/mime/*.convs
 usr/share/cups/mime/*.types

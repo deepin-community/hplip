@@ -8,7 +8,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from base import utils,imageprocessing
+from base import utils,imageprocessing, logger
 #from scan import sane
 import re
 import os
@@ -20,33 +20,49 @@ from PyQt5.QtWidgets import *
 from scan import sane
 from collections import OrderedDict
 
+try:
+    LOG_LEVEL = os.environ["LOG_LEVEL"]
+except:
+    LOG_LEVEL = logger.Logger.LOG_LEVEL_INFO
+
+log = logger.Logger('', LOG_LEVEL, logger.Logger.LOG_TO_CONSOLE)
+
+
 PAGE_SIZES = OrderedDict([ # in mm
-    ("letter" , (215, 279, "Letter", 'in')),
+    ("letter" , (215, 279, "Letter", 'mm')),
     ('a3' , (297, 420, "A3", 'mm')),
     ("a4" , (210, 297, "A4", 'mm')),
     ("a5" , (148, 210, "A5", 'mm')),
-    ('5x7' , (127, 178, "5x7 photo", 'in')),
-    ('4x6' , (102, 152, "4x6 photo", 'in')),
-    ('3x5' , (76, 127, "3x5 index card", 'in')),
-    ('a2_env' , (111, 146, "A2 Envelope", 'in')),
+    ('5x7' , (127, 178, "5x7 photo", 'mm')),
+    ('4x6' , (102, 152, "4x6 photo", 'mm')),
+    ('3x5' , (76, 127, "3x5 index card", 'mm')),
+    ('a2_env' , (111, 146, "A2 Envelope", 'mm')),
     ("a6" , (105, 148, "A6", 'mm')),
     ("b4" , (257, 364, "B4", 'mm')),
     ("b5" , (182, 257, "B5", 'mm')),
-    ("c6_env" , (114, 162, "C6 Envelope", 'in')),
-    ("dl_env" , (110, 220, "DL Envelope", 'in')),
-    ("exec" , (184, 267, "Executive", 'in')),
+    ("c6_env" , (114, 162, "C6 Envelope", 'mm')),
+    ("dl_env" , (110, 220, "DL Envelope", 'mm')),
+    ("exec" , (184, 267, "Executive", 'mm')),
     ("flsa" , (216, 330, "Flsa", 'mm')),
     ("higaki" , (100, 148, "Hagaki", 'mm')),
     ("japan_env_3" , (120, 235, "Japanese Envelope #3", 'mm')),
     ("japan_env_4" , (90, 205, "Japanese Envelope #4", 'mm')),
-    ("legal" , (215, 356, "Legal", 'in')),
-    ("no_10_env" , (105, 241, "Number 10 Envelope", 'in')),
+    ("legal" , (215, 356, "Legal", 'mm')),
+    ("no_10_env" , (105, 241, "Number 10 Envelope", 'mm')),
     ("oufufu-hagaki" , (148, 200, "Oufuku-Hagaki", 'mm')),
-    ("photo" , (102, 152, "Photo", 'in')),
-    ("super_b" , (330, 483, "Super B", 'in')),
+    ("photo" , (102, 152, "Photo", 'mm')),
+    ("super_b" , (330, 483, "Super B", 'mm')),
     ])
 
+patterns = [
+        r'_5000_', r'_7500', r'_n9120', r'_3600_f1', r'_n4600', r'_2600_f1', r'_n6600',
+        r'_8500fn2', r'_3500_f1', r'_4500_fn1', r'_7000_s3', r'_3000_s3', r'hp2000S1',
+        r'hpgt2500', r'_2000_s2', r'7000_snw1', r'4000_snw1', r'_3000_s4', r'_5000_s5',
+        r'test',r'_M232-M237', r'_260x', r'_m329', r'_4104'
+        ]
 
+# Combine patterns into a single regular expression
+combined_pattern = re.compile('|'.join(patterns), re.I)
 #devicelist = {}
 device_name = ''
 path = os.getcwd()
@@ -126,7 +142,8 @@ class Ui_HpScan(object):
     batchsepBC_pri = True
     other_device_cnt = 0
     ocr = False
-	
+    manual_duplex_first_pass_done = False
+
     def setupUi(self, HpScan):
         pyPlatform = platform.python_version()
         HpScan.setObjectName("HpScan")
@@ -167,6 +184,7 @@ class Ui_HpScan(object):
         self.comboBox_Color = QtWidgets.QComboBox(self.dockWidgetContents)
         self.comboBox_Color.setGeometry(QtCore.QRect(85, 210, 171, 41))
         self.comboBox_Color.setObjectName("comboBox_Color")
+        self.comboBox_Color.addItem("")
         self.comboBox_Color.addItem("")
         self.comboBox_Color.addItem("")
         self.comboBox_Color.currentIndexChanged.connect(self.comboBox_ColorIndexChanged)
@@ -530,7 +548,7 @@ class Ui_HpScan(object):
         self.sizel5 = self.s5.value()
     def edge_erase_spin_box_value_changed(self):
         self.edge_erase_value = round(self.edge_erase_spin_box.value(),2)
-        #print("self.edge_erase_value = ", self.edge_erase_value)
+        #log.debugf"self.edge_erase_value =  {self.edge_erase_value}")
     def comboBox_Path(self, new_path = None):
         path = new_path
         
@@ -546,6 +564,8 @@ class Ui_HpScan(object):
     
     def scanButton_clicked(self):
         cmd = "hp-scan" + ' --device=' + self.device_uri + ' --filetype=' + self.file_type + ' --mode=' + self.color + ' --res=' + self.resolution + ' --size=' + self.size
+        if self.source == "manual-duplex":
+            cmd = cmd + " --adf" + " --manual_duplex"
         if self.source == 'adf' or self.source == 'duplex':
             cmd = cmd + ' --' + self.source
         if self.source == 'adf-backside':
@@ -602,9 +622,13 @@ class Ui_HpScan(object):
             #cmd = cmd + ' --' + 'batchsepBC'
         cmd = cmd + ' --path=' + str(path)
         cmd = cmd + ' --' + 'uiscan'
-        #print (cmd)
+
         self.pushButton_Scan.setEnabled(False)
+        QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
+        log.debug(f"running scan command - {cmd}")
         status = utils.run(cmd)
+        QApplication.restoreOverrideCursor()
+
         #print (status)
         if status[0] == 2:
             self.failureMessage(multipick_error_message)
@@ -641,12 +665,80 @@ class Ui_HpScan(object):
             self.failureMessage(convert_error_message)
         elif status[0] == 7:
             self.warningMessage(multipick_error_message)
+        elif status[0] == 8:
+            if self.manual_duplex_first_pass_done == False:
+                self.prompt_user_to_flip()
+            else:
+                log.debug("manual duplex reorder page logic")
+                self.manualduplex_savepdf(str(path))
+                self.manual_duplex_first_pass_done = False
         self.pushButton_Scan.setEnabled(True)
         #if status != 0:
             #print("Cmd %s failed with status %d",cmd,status)
         #sys.exit(app.exec_())
 
+    def manualduplex_savepdf(self,input_folder):
+        from reportlab.pdfgen import canvas
+        from reportlab.lib.pagesizes import letter
+        from PIL import Image
+        import os
+        output_pdf = utils.createSequencedFilename("HPscan_manualDuplex", ".pdf",path)
+        # Get all PNG files from the folder (sorted for order)
+        png_files = sorted([os.path.join(input_folder, f) for f in os.listdir(input_folder) if f.lower().endswith(".png")])
+        if not png_files:
+            log.debug("No PNG files found in the directory!")
 
+        mid = len(png_files) // 2
+        png_duplex_list = [x for pair in zip(png_files[:mid], png_files[-1:mid-1:-1]) for x in pair]
+        log.debug(f"png duplex file list = {png_duplex_list}")
+            
+        # Create a PDF canvas
+        c = canvas.Canvas(output_pdf, pagesize=letter)
+        width, height = letter
+
+        # Process each PNG file
+        for png_file in png_duplex_list:
+            img = Image.open(png_file)
+            img_width, img_height = img.size
+
+            # Scale the image to fit within the page
+            aspect = img_height / float(img_width)
+            img_width = width
+            img_height = width * aspect
+
+            if img_height > height:
+                img_height = height
+                img_width = height / aspect
+
+            x = (width - img_width) / 2
+            y = (height - img_height) / 2
+
+            # Draw image on PDF page
+            c.drawImage(png_file, x, y, img_width, img_height)
+            c.showPage()
+
+        # Save the PDF
+        c.save()
+        log.debug(f"PDF saved as {output_pdf}")
+        for png_file in png_duplex_list:
+            os.unlink(png_file)
+            log.debug("cleanup png files")
+    def prompt_user_to_flip(self):
+        """Show a blocking prompt asking the user to flip the paper stack.For Manual Duplex"""
+        self.manual_duplex_first_pass_done = True
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setWindowTitle("Manual Duplex Scanning")
+        msg_box.setText("Please flip the paper stack and press OK to continue scanning.")
+        msg_box.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        result = msg_box.exec_()
+        if result == QMessageBox.Ok:
+            self.scanButton_clicked()
+        else:
+            log.debug("User cancelled manual duplex scan")
+        return
+            
+        #return msg_box.exec_() == QMessageBox.Ok  # Returns True if OK is pressed
     def msgbtn(self):
         pass
 
@@ -678,15 +770,14 @@ class Ui_HpScan(object):
         self.comboBox_Papersize.addItems(supported_PageSizes)
         self.comboBox_Papersize.currentIndexChanged.connect(self.comboBox_PaperSizeIndexChanged)
 
-        
-        if device != '5000' and device != '7500' and device != '9120' and device != '3600' and device != '4600' and device != '2600' and device != '6600' and device != '8500' and device != '3500' and device != '4500' and device != '3000' and device != '7000' and device != '2000' and device != '2500' and device != '4000':
+        if device != 'test' and device != '5000' and device != '7500' and device != '9120' and device != '3600' and device != '4600' and device != '2600' and device != '6600' and device != '8500' and device != '3500' and device != '4500' and device != '3000' and device != '7000' and device != '2000' and device != '2500' and device != '4000' and device != 'M232-M237' and device != '260x' and device != 'm329' and device != '4104':
             self.multi_pick_pri = False
         else:
             self.comboBox_Flatbed.clear()
             self.comboBox_Flatbed.addItem("")
             self.comboBox_Flatbed.addItem("")
             self.comboBox_Flatbed.addItem("")
-            if device == '5000' or device == '3000' or device == '7000' or device == '2000' or device == '4000':
+            if device == '5000' or device == '3000' or device == '7000' or device == '2000' or device == '4000' :
                 if device == '2000':
                     self.multi_pick_pri = False
                     self.multi_pick.setEnabled(False)
@@ -694,7 +785,7 @@ class Ui_HpScan(object):
                 self.comboBox_Flatbed.setItemText(1, _translate("HpScan", "ADF", None))
                 self.comboBox_Flatbed.setItemText(2, _translate("HpScan", "ADF-Backside", None))
                 self.comboBox_Flatbed.setCurrentIndex(1)
-            elif device == '7500' or device == '9120' or device == '3600' or device == '4600' or device == '2600' or device == '6600' or device == '8500' or device == '3500' or device == '4500' or device == '2500':
+            elif device == 'test' or device == '7500' or device == '9120' or device == '3600' or device == '4600' or device == '2600' or device == '6600' or device == '8500' or device == '3500' or device == '4500' or device == '2500' or device == 'M232-M237' or device == '260x'or device == 'm329' or device == '4104':
                 if device == '2500':
                     self.multi_pick_pri = False
                     self.multi_pick.setEnabled(False)
@@ -704,15 +795,18 @@ class Ui_HpScan(object):
                 self.comboBox_Flatbed.setItemText(2, _translate("HpScan", "Duplex", None))
                 self.comboBox_Flatbed.setItemText(3, _translate("HpScan", "ADF-Backside", None))
                 self.comboBox_Flatbed.setCurrentIndex(1)
-            if device == '5000' or device == '7500' or device == '9120' or device == '3600' or device == '4600' or device == '2600' or device == '6600' or device == '8500' or device == '3500' or device == '4500' or device == '3000' or device == '7000' or device == '2000' or device == '2500' or device =='4000':
+            if device == 'test' or device == 'm329':
+                self.comboBox_Flatbed.addItem("")
+                self.comboBox_Flatbed.setItemText(4, _translate("HpScan", "Manual-Duplex", None))
+            if device == '5000' or device == '7500' or device == '9120' or device == '3600' or device == '4600' or device == '2600' or device == '6600' or device == '8500' or device == '3500' or device == '4500' or device == '3000' or device == '7000' or device == '2000' or device == '2500' or device =='4000' or device == 'M232-M237' or device == '260x' or device == 'm329' or device == '4104':
                 if device == '2500' or device == '2000' or device == '2600':
                     self.multi_pick_pri = False
                     self.multi_pick.setEnabled(False)
                 else:
                     self.multi_pick_pri = True
                     self.multi_pick.setEnabled(True)
-                self.source = str(self.comboBox_Flatbed.currentText()).lower()
-                self.comboBox_Flatbed.currentIndexChanged.connect(self.comboBox_SourceSelected)
+            self.source = str(self.comboBox_Flatbed.currentText()).lower()
+            self.comboBox_Flatbed.currentIndexChanged.connect(self.comboBox_SourceSelected)
         
     def comboBox_SourceSelected(self):
         self.source = str(self.comboBox_Flatbed.currentText()).lower()
@@ -781,6 +875,9 @@ class Ui_HpScan(object):
                 self.comboBox_Flatbed.setItemText(1, _translate("HpScan", "Duplex", None))
                 self.comboBox_Flatbed.setItemText(2, _translate("HpScan", "ADF-Backside", None))
                 self.comboBox_Flatbed.setCurrentIndex(0)
+            if (re.search(r'_m329', self.device_uri)) or (re.search(r'test', self.device_uri)):
+                self.comboBox_Flatbed.addItem("")
+                self.comboBox_Flatbed.setItemText(4, _translate("HpScan", "Manual-Duplex", None))
             #if pyPlatform < 3:
             self.CheckEnable()
             self.bp_blankpage.setChecked(False)
@@ -860,6 +957,9 @@ class Ui_HpScan(object):
                 self.comboBox_Flatbed.setItemText(1, _translate("HpScan", "Duplex", None))
                 self.comboBox_Flatbed.setItemText(2, _translate("HpScan", "ADF-Backside", None))
                 self.comboBox_Flatbed.setCurrentIndex(0)
+            if (re.search(r'_m329', self.device_uri)) or (re.search(r'test', self.device_uri)):
+                self.comboBox_Flatbed.addItem("")
+                self.comboBox_Flatbed.setItemText(4, _translate("HpScan", "Manual-Duplex", None))
             self.CheckEnable()
     
     def Auto_orient(self):
@@ -1127,6 +1227,9 @@ class Ui_HpScan(object):
                 self.comboBox_Flatbed.setItemText(1, _translate("HpScan", "Duplex", None))
                 self.comboBox_Flatbed.setItemText(2, _translate("HpScan", "ADF-Backside", None))
                 self.comboBox_Flatbed.setCurrentIndex(0)
+            if (re.search(r'_m329', self.device_uri)) or (re.search(r'test', self.device_uri)):
+                self.comboBox_Flatbed.addItem("")
+                self.comboBox_Flatbed.setItemText(4, _translate("HpScan", "Manual-Duplex", None))
             self.document_merge.setChecked(False)
             self.DisableAll()
             self.crushed.setChecked(False)
@@ -1324,7 +1427,7 @@ class Ui_HpScan(object):
             if self.color_dropout_pri == True:
                 self.color_dropout.setEnabled(True)
             self.comboBox_Flatbed.setEnabled(True)
-            if (re.search(r'_7500', self.device_uri)) or (re.search(r'_N9120', self.device_uri,re.I)) or (re.search(r'_3600_f1', self.device_uri,re.I)) or (re.search(r'_n4600', self.device_uri,re.I)) or (re.search(r'_2600_f1', self.device_uri,re.I)) or (re.search(r'_n6600', self.device_uri,re.I)) or (re.search(r'_8500fn2', self.device_uri)) or (re.search(r'_3500_f1', self.device_uri)) or (re.search(r'_4500_fn1', self.device_uri)) or (re.search(r'2500', self.device_uri)):
+            if (re.search(r'_7500', self.device_uri)) or (re.search(r'_N9120', self.device_uri,re.I)) or (re.search(r'_3600_f1', self.device_uri,re.I)) or (re.search(r'_n4600', self.device_uri,re.I)) or (re.search(r'_2600_f1', self.device_uri,re.I)) or (re.search(r'_n6600', self.device_uri,re.I)) or (re.search(r'_8500fn2', self.device_uri)) or (re.search(r'_3500_f1', self.device_uri)) or (re.search(r'_4500_fn1', self.device_uri)) or (re.search(r'2500', self.device_uri) or (re.search(r'_M232-M237', self.device_uri)) or (re.search(r'_260x', self.device_uri)) or (re.search(r'_m329', self.device_uri)) or (re.search(r'_4104', self.device_uri))):
                 self.comboBox_Flatbed.clear()
                 self.comboBox_Flatbed.addItem("")
                 self.comboBox_Flatbed.addItem("")
@@ -1344,6 +1447,9 @@ class Ui_HpScan(object):
                 self.comboBox_Flatbed.setItemText(1, _translate("HpScan", "Duplex", None))
                 self.comboBox_Flatbed.setItemText(2, _translate("HpScan", "ADF-Backside", None))
                 self.comboBox_Flatbed.setCurrentIndex(0)
+            if (re.search(r'_m329', self.device_uri)) or (re.search(r'test', self.device_uri)):
+                self.comboBox_Flatbed.addItem("")
+                self.comboBox_Flatbed.setItemText(4, _translate("HpScan", "Manual-Duplex", None))
             self.source = str(self.comboBox_Flatbed.currentText()).lower()
 
     def Document_merge_adf_flatbed(self):
@@ -1429,49 +1535,30 @@ class Ui_HpScan(object):
             self.warningMessage(no_pages_to_merge)
              
     def change_source(self):
-        #device_name = re.search(r'_5000_', self.device_uri)
-        #if device_name:
-        if re.search(r'_5000_', self.device_uri):
-            self.device_name = '5000'
-        elif re.search(r'_7500', self.device_uri):
-            self.device_name = '7500'
-        elif re.search(r'hp2000S1', self.device_uri):
-            self.device_name = '2000'
-        elif re.search(r'hpgt2500', self.device_uri):
-            self.device_name = '2500'
-        elif re.search(r'_N9120', self.device_uri,re.I):
-            self.device_name = '9120'
-        elif re.search(r'_3600_f1', self.device_uri,re.I):
-            self.device_name = '3600'
-        elif re.search(r'_n4600', self.device_uri,re.I):
-            self.device_name = '4600'
-        elif re.search(r'_2600_f1', self.device_uri,re.I):
-            self.device_name = '2600'
-        elif re.search(r'_n6600', self.device_uri,re.I):
-            self.device_name = '6600'                                                
-        elif re.search(r'_8500fn2', self.device_uri):
-            self.device_name = '8500'
-        elif re.search(r'_3500_f1', self.device_uri):
-            self.device_name = '3500'
-        elif re.search(r'_4500_fn1', self.device_uri):
-            self.device_name = '4500'
-        elif re.search(r'_7000_s3', self.device_uri):
-            self.device_name = '7000'
-        elif re.search(r'_3000_s3', self.device_uri):
-            self.device_name = '3000'
-        elif re.search(r'_2000_s2', self.device_uri):
-            self.device_name = '2000'
-        elif re.search(r'7000_snw1', self.device_uri):
-            self.device_name = '7000'
-        elif re.search(r'4000_snw1', self.device_uri):
-            self.device_name = '4000'
-        elif re.search(r'_3000_s4', self.device_uri):
-            self.device_name = '3000'
-        elif re.search(r'_5000_s5', self.device_uri):
-            self.device_name = '5000'
-        #print (self.device_uri)
-        if self.device_name == '7500' or self.device_name == '5000' or self.device_name == '9120' or self.device_name == '3600' or self.device_name == '4600' or self.device_name == '2600' or self.device_name == '6600' or self.device_name == '8500' or self.device_name == '3500' or self.device_name == '4500' or self.device_name == '7000' or self.device_name == '3000' or self.device_name == '2000' or self.device_name == '2500' or self.device_name == '4000':
-            self.comboBox_SourceChanged(self.device_name)
+        device_patterns = {
+            '_5000_': '5000', '_7500': '7500', 'hp2000S1': '2000',
+            'hpgt2500': '2500', '_n9120': '9120', '_3600_f1': '3600',
+            '_n4600': '4600', '_2600_f1': '2600', '_n6600': '6600',
+            '_8500fn2': '8500', '_3500_f1': '3500', '_4500_fn1': '4500',
+            '_7000_s3': '7000', '_3000_s3': '3000', '_2000_s2': '2000',
+            '7000_snw1': '7000', '4000_snw1': '4000', '_3000_s4': '3000',
+            '_5000_s5': '5000', 'test': 'test', '_M232-M237': 'M232-M237', '_260x' : '260x', '_m329': 'm329', '_4104' : '4104'
+        }
+        
+        for pattern, name in device_patterns.items():
+            if re.search(pattern, self.device_uri, re.I):
+                self.device_name = name
+                break
+        else:
+            self.device_name = None
+        """
+        if self.device_name in {
+            '7500', '5000', '9120', '3600', '4600', '2600',
+            '6600', '8500', '3500', '4500', '7000', '3000',
+            '2000', '2500', '4000', 'test', 'M232-M237', '260x', 'm329', '4104'
+        }:"
+        """
+        self.comboBox_SourceChanged(self.device_name)
         
         
     def comboBox_device_URI(self):
@@ -1503,6 +1590,7 @@ class Ui_HpScan(object):
         #self.comboBox_Color.setItemText(0, _translate("HpScan", "Lineart", None))
         self.comboBox_Color.setItemText(0, _translate("HpScan", "Gray", None))
         self.comboBox_Color.setItemText(1, _translate("HpScan", "Color", None))
+        self.comboBox_Color.setItemText(2, _translate("HpScan", "BlackAndWhite", None))
         self.comboBox_Color.setCurrentIndex(0)
         self.comboBox_Resolution.setItemText(0, _translate("HpScan", "75", None))
         self.comboBox_Resolution.setItemText(1, _translate("HpScan", "100", None))
@@ -1566,17 +1654,23 @@ class Ui_HpScan(object):
         self.image_enhancement.setText(_translate("HpScan", "Image enhancement", None))        
         self.mixed_feed.setText(_translate("HpScan", "Mixed document feed", None))
        
+        #print(self.devicelist)
+
+        # Initialize the index for comboBox items
         i = 0
-        #print self.devicelist
+
+        # Process each device
         for device in self.devicelist:
-            if re.search(r'_5000_', device) or re.search(r'_7500', device) or re.search(r'_N9120', device,re.I) or re.search(r'_3600_f1', device,re.I) or re.search(r'_n4600', device,re.I) or re.search(r'_2600_f1', device,re.I) or re.search(r'_n6600', device,re.I) or re.search(r'_8500fn2', device) or re.search(r'_3500_f1', device) or re.search(r'_4500_fn1', device) or re.search(r'_7000_s3', device) or re.search(r'_3000_s3', device) or re.search(r'hp2000S1', device) or re.search(r'hpgt2500', device) or re.search(r'_2000_s2', device) or re.search(r'7000_snw1', device) or re.search(r'4000_snw1', device) or re.search(r'_3000_s4', device) or re.search(r'_5000_s5', device):
+           log.debug(f"device discovered - {device}")
+           if combined_pattern.search(device):
                 self.comboBox_Device_URI.addItem(device)
-                self.comboBox_Device_URI.setItemText(i, _translate("HpScan", device, None))
+                self.comboBox_Device_URI.setItemText(i, _translate('HpScan', device,None))
                 i += 1
-            else:
+           else:
                 self.other_device_cnt += 1
         self.comboBox_path.addItem(path)
-        self.comboBox_path.setItemText(0,_translate("HpScan", path, None))    
+        self.comboBox_path.setItemText(0, _translate('HpScan', path,
+                None)) 
         
         
         #self.pushButton_Cancel.setText(_translate("HpScan", "Cancel", None))
@@ -1598,20 +1692,18 @@ class SetupDialog():
         #device = ''
         sane.init()
         sane_devices = sane.getDevices()
-        
-        for device, mfg, mdl, t in sane_devices:
-            if re.search(r'_5000_', device) or re.search(r'_7500', device) or re.search(r'_N9120', device,re.I) or re.search(r'_3600_f1', device,re.I) or re.search(r'_n4600', device,re.I) or re.search(r'_2600_f1', device,re.I) or re.search(r'_n6600', device,re.I) or re.search(r'_8500fn2', device) or re.search(r'_3500_f1', device) or re.search(r'_4500_fn1', device) or re.search(r'_7000_s3', device) or re.search(r'_3000_s3', device) or re.search(r'hp2000S1', device) or re.search(r'hpgt2500', device) or re.search(r'_2000_s2', device) or re.search(r'7000_snw1', device) or re.search(r'4000_snw1', device) or re.search(r'_3000_s4', device) or re.search(r'_5000_s5', device):
+        log.debug(f"sane devices = {sane_devices}")
+        # Process each device
+        for (device, mfg, mdl, t) in sane_devices:
+            if combined_pattern.search(device):
                 try:
                     scanDevice = sane.openDevice(device)
-                    #source_option = scanDevice.getOptionObj("source").constraint
                     brx = scanDevice.getOptionObj('br-x').limitAndSet(None)
                     bry = scanDevice.getOptionObj('br-y').limitAndSet(None)
-                    devicelist[device] = [mdl]
-                    #devicelist[device].extend([source_option,int(brx)+1,int(bry)+1])
-                    devicelist[device].extend([int(brx)+1,int(bry)+1])
+                    devicelist[device] = [mdl, int(brx) + 1, int(bry) + 1]
                     scanDevice.closeScan()
-                except :
-                    pass                    
+                except Exception as e:
+                    log.debug(f"Error processing device {device}: {e}")
 
         sane.deInit()
         #print (devicelist)

@@ -114,7 +114,8 @@ class Logger(object):
         self.module = module
         self.pid = os.getpid()
         self.fmt = True
-        self.set_level(level)
+        self._level = Logger.LOG_LEVEL_INFO
+        self.set_level(int(level))
 
 
     def set_level(self, level):
@@ -124,15 +125,15 @@ class Logger(object):
                 self._level = Logger.logging_levels.get(level, Logger.LOG_LEVEL_INFO)
                 return True
             else:
-                self.error("Invalid logging level: %s" % level)
+                self.error("Invalid string logging level: %s" % level)
                 return False
 
         elif isinstance(level, int):
-            if Logger.LOG_LEVEL_DEBUG3 <= level <= Logger.LOG_LEVEL_FATAL:
+            if Logger.LOG_LEVEL_DBG <= level <= Logger.LOG_LEVEL_NONE:
                 self._level = level
             else:
                 self._level = Logger.LOG_LEVEL_ERROR
-                self.error("Invalid logging level: %d" % level)
+                self.error("Invalid integer logging level: %d" % level)
                 return False
 
         else:
@@ -435,10 +436,10 @@ class Logger(object):
                 start = start + " "
                 number_chars = number_chars + 1
             try:
-                elem_start = re.findall("(\<\W{0,1}\w+) ?", line)[0]
-                elem_finished = re.findall("([?|\]\]]*\>)", line)[0]
+                elem_start = re.findall(r"(\<\W{0,1}\w+) ?", line)[0]
+                elem_finished = re.findall(r"([?|\]\]]*\>)", line)[0]
                 #should not have *
-                attrs = re.findall("(\S*?\=\".*?\")", line)
+                attrs = re.findall(r"(\S*?\=\".*?\")", line)
                 #output.write(start + elem_start)
                 self.log(start+elem_start, level, False)
                 number_chars = len(start + elem_start)

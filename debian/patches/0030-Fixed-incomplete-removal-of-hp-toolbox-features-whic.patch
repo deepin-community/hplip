@@ -19,7 +19,7 @@ Bug-Ubuntu: https://bugs.launchpad.net/bugs/1789184
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/ui5/devmgr5.py b/ui5/devmgr5.py
-index 491f168..786e179 100644
+index c6f6463..c9b3620 100644
 --- a/ui5/devmgr5.py
 +++ b/ui5/devmgr5.py
 @@ -324,11 +324,11 @@ class DevMgr5(Ui_MainWindow_Derived, Ui_MainWindow, QMainWindow):

@@ -11,7 +11,7 @@ Forwarded: no
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile.am b/Makefile.am
-index caf17e4..f23f3a8 100644
+index 3cdabb4..21c2e7d 100644
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -181,10 +181,10 @@ if !HPLIP_CLASS_DRIVER

@@ -11,9 +11,11 @@ LP: #1302437
  io/hpmud/musb.c | 32 +++++++++++++++++++++-----------
  1 file changed, 21 insertions(+), 11 deletions(-)
 
+diff --git a/io/hpmud/musb.c b/io/hpmud/musb.c
+index 2aa8a54..57c212f 100644
 --- a/io/hpmud/musb.c
 +++ b/io/hpmud/musb.c
-@@ -696,7 +696,8 @@
+@@ -696,7 +696,8 @@ static libusb_device *get_libusb_device(const char *uri)
      int numdevs = 0;        /* number of connected devices */
      int i, conf, iface, altset ;
  
@@ -23,7 +25,7 @@ LP: #1302437
      numdevs = libusb_get_device_list(libusb_ctx, &libusb_dev_list);
      for (i=0; i< numdevs; i++)
      {
-@@ -2055,7 +2056,8 @@
+@@ -2055,7 +2056,8 @@ int __attribute__ ((visibility ("hidden"))) musb_probe_devices(char *lst, int ls
      char serial[128], mfg[128], sz[HPMUD_LINE_SIZE];
      int r, size=0;
  
@@ -33,7 +35,7 @@ LP: #1302437
      numdevs = libusb_get_device_list(ctx, &list);
  
      if (numdevs <= 0)
-@@ -2156,13 +2158,15 @@
+@@ -2156,13 +2158,15 @@ int __attribute__ ((visibility ("hidden"))) musb_probe_devices(char *lst, int ls
      }//end for loop
  
  bugout:
@@ -52,7 +54,7 @@ LP: #1302437
  
      return size;
  }
-@@ -2188,7 +2192,8 @@
+@@ -2188,7 +2192,8 @@ enum HPMUD_RESULT hpmud_make_usb_uri(const char *busnum, const char *devnum, cha
  
      *bytes_read=0;
  
@@ -62,7 +64,7 @@ LP: #1302437
      numdevs = libusb_get_device_list(ctx, &list);
  
      if (numdevs <= 0)
-@@ -2291,8 +2296,10 @@
+@@ -2291,8 +2296,10 @@ bugout:
      if (hd != NULL)
          libusb_close(hd);
  
@@ -75,7 +77,7 @@ LP: #1302437
  
      return stat;
  }
-@@ -2311,7 +2318,8 @@
+@@ -2311,7 +2318,8 @@ enum HPMUD_RESULT hpmud_make_usb_serial_uri(const char *sn, char *uri, int uri_s
  
      *bytes_read=0;
  
@@ -85,7 +87,7 @@ LP: #1302437
      numdevs = libusb_get_device_list(ctx, &list);
  
      if (numdevs <= 0)
-@@ -2337,8 +2345,10 @@
+@@ -2337,8 +2345,10 @@ enum HPMUD_RESULT hpmud_make_usb_serial_uri(const char *sn, char *uri, int uri_s
      stat = HPMUD_R_OK;
  
  bugout:

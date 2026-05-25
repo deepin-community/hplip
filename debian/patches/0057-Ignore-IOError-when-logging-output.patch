@@ -8,10 +8,10 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-silence-ioe
  1 file changed, 2 insertions(+)
 
 diff --git a/base/logger.py b/base/logger.py
-index 949c2f7..1a37379 100644
+index 653e8ff..7a95961 100644
 --- a/base/logger.py
 +++ b/base/logger.py
-@@ -199,6 +199,8 @@ class Logger(object):
+@@ -200,6 +200,8 @@ class Logger(object):
                          out.write('\n')
  
                      out.flush()

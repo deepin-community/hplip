@@ -31,18 +31,10 @@ import pwd
 import tarfile
 import stat
 import glob
+import hashlib
 
-try:
-    import hashlib  # new in 2.5
-
-    def get_checksum(s):
-        return hashlib.sha1(s).hexdigest()
-
-except ImportError:
-    import sha  # deprecated in 2.6/3.0
-
-    def get_checksum(s):
-        return sha.new(s).hexdigest()
+def get_checksum(s):
+    return hashlib.sha256(s).hexdigest()
 
 
 # Local
@@ -95,7 +87,7 @@ err_pats = {r'(?is)<TITLE>.*?(404|403).*?ERROR.*?</TITLE>': 0.95,
 # Note:- If new utility is added, add same utility here to uninstall properly.
 
 BINS_LIST = ['hpijs', 'hp-align', 'hp-colorcal', 'hp-faxsetup', 'hp-linefeedcal', 'hp-pkservice', 'hp-printsettings', 'hp-sendfax', 'hp-timedate', 'hp-check', 'hp-devicesettings', 'hp-firmware', 'hp-makecopies', 'hp-plugin', 'hp-probe', 'hp-setup', 'hp-toolbox', 'hp-check-plugin', 'hp-diagnose_plugin',
-             'hp-info', 'hp-makeuri', 'hp-pqdiag', 'hp-query', 'hp-systray', 'hp-unload', 'hp-clean', 'hp-fab', 'hp-levels', 'hp-print', 'hp-scan', 'hp-testpage', 'hp-wificonfig', 'hp-upgrade', 'hplip-info', 'hp-check-upgrade', 'hp-config_usb_printer', 'hp-diagnose_queues', 'hp-devicesetup', 'hp-doctor', 'hp-logcapture']
+             'hp-info', 'hp-makeuri', 'hp-pqdiag', 'hp-query', 'hp-systray', 'hp-unload', 'hp-clean', 'hp-fab', 'hp-levels', 'hp-print', 'hp-scan', 'hp-testpage', 'hp-wificonfig', 'hp-upgrade', 'hplip-info', 'hp-check-upgrade', 'hp-config_usb_printer', 'hp-diagnose_queues', 'hp-devicesetup', 'hp-doctor', 'hp-logcapture', 'hp-uiscan']
 
 LIBS_LIST = ['libhpmud.*', 'libhpip.*', 'sane/libsane-hpaio.*', 'cups/backend/hp', 'cups/backend/hpfax', 'cups/filter/hpcac','sane/libsane-hp2000S1*', 'libjpeg*',
              'cups/filter/hpps', 'cups/filter/pstotiff', 'cups/filter/hpcups', 'cups/filter/hpcupsfax', 'cups/filter/hplipjs']
@@ -104,7 +96,7 @@ HPLIP_EXT_LIST = ['cupsext.so', 'cupsext.la', 'scanext.so', 'scanext.la',
                   'hpmudext.so', 'hpmudext.la', 'pcardext.so', 'pcardext.la']
 
 FILES_LIST = ['/usr/share/cups/drv/hp/', '/usr/local/share/ppd/HP/', '/usr/local/share/cups/drv/hp/', '/usr/share/applications/hplip.desktop', '/usr/share/applications/hp-uiscan.desktop',
-              '/etc/xdg/autostart/hplip-systray.desktop', '/etc/hp/hplip.conf', '/usr/share/doc/hplip-*', '/usr/lib/systemd/system/hplip-printer*.service']
+              '/etc/xdg/autostart/hplip-systray.desktop', '/etc/hp/hplip.conf', '/usr/share/doc/hplip-*', '/usr/lib/systemd/system/hplip-printer*.service' , '/usr/share/ipp-usb/quirks/HPLIP.conf']
 
 RULES_LIST = ['56-hpmud.rules', '56-hpmud_sysfs.rules', '40-hplip.rules', '56-hpmud_support.rules', '56-hpmud_support_sysfs.rules', '55-hpmud.rules','S99-2000S1.rules',
               '55-hpmud_sysfs.rules', '56-hpmud_add_printer.rules', '56-hpmud_add_printer_sysfs.rules', '86-hpmud-hp_*.rules', '86-hpmud_plugin.rules', '86-hpmud_plugin_sysfs.rules']
@@ -1099,6 +1091,8 @@ class CoreInstall(object):
                 dbus_found = False
         else:
             if(check_ps(['dbus-daemon'])):
+                dbus_found = True
+            elif(check_ps(["dbus-broker"])):
                 dbus_found = True
 
         if dbus_found:
@@ -2218,7 +2212,7 @@ class CoreInstall(object):
 
         # removing HPLIP uninstall link
         if usrbin_dir is not None:
-            hp_uninstall = usrbin_dir + "hp-unistall"
+            hp_uninstall = usrbin_dir + "hp-uninstall"
             utils.remove(hp_uninstall, self.passwordObj, checkSudo)
 
         log.info("HPLIP uninstallation is completed")

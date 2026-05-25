@@ -1,0 +1,35 @@
+From: Thorsten Alteholz <debian@alteholz.de>
+Date: Mon, 25 May 2026 01:40:29 +0200
+Subject: use platstdlib instead of platlib
+
+---
+ base/utils.py | 2 +-
+ configure.in  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/base/utils.py b/base/utils.py
+index 253c7cb..16d0c85 100644
+--- a/base/utils.py
++++ b/base/utils.py
+@@ -2537,7 +2537,7 @@ def import_ext(ext_name):
+         return importlib.import_module(ext_name)
+     except ImportError:
+         import sysconfig
+-        sys.path.append(sysconfig.get_path('platlib'))
++        sys.path.append(sysconfig.get_path('platstdlib'))
+         return importlib.import_module(ext_name)
+ 
+ def get_distro_name(passwordObj = None):
+diff --git a/configure.in b/configure.in
+index 7dcce95..9f96035 100644
+--- a/configure.in
++++ b/configure.in
+@@ -673,7 +673,7 @@ if test "$class_driver" = "no" && test "$hpijs_only_build" = "no" && test "$lite
+    PYTHONEXECDIR=`$PYTHON -c "from distutils.sysconfig import get_python_lib; print (get_python_lib(1));" 2>/dev/null || echo "not found"`
+    if test "$PYTHONEXECDIR" = "not found"; then
+       AC_MSG_WARN([Failed to determine the Python executable directory. Retry using sysconfig module.])
+-      PYTHONEXECDIR=`$PYTHON -c "import sysconfig; print(sysconfig.get_path('platlib'))" 2>/dev/null || echo "not found"`
++      PYTHONEXECDIR=`$PYTHON -c "import sysconfig; print(sysconfig.get_path('platstdlib'))" 2>/dev/null || echo "not found"`
+       if test "$PYTHONEXECDIR" = "not found"; then
+          AC_MSG_ERROR([Failed to determine the Python executable directory. Please check your Python installation.], 6)
+       fi

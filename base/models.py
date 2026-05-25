@@ -35,7 +35,7 @@ except ImportError:
     datetime = None
 
 
-pat_prod_num = re.compile("""(\d+)""", re.I)
+pat_prod_num = re.compile(r"""(\d+)""", re.I)
 
 TYPE_UNKNOWN = 0
 TYPE_STRING = 1
@@ -51,7 +51,7 @@ TYPE_DATE = 8  # format: mm/dd/yyyy
 
 FAMILY_CLASSES = ["PCL3-Class3A","PCL3-Class3B","PCL3-Class3","PCLM-COLOR","PCLM-MONO","PCL4-Class1","LJ-Class1","LJ-Class2","LJ-Class3","LJ-Class4","LJ-Class4A","LJ-Class5","LJ-Class6","DJGenericVIP","DJ9xxVIP","DJ55xx","Stabler","StingrayOJ","Copperhead","CopperheadXLP","Copperhead12","CopperheadIPH","CopperheadIPH15","CopperheadIPH17","CLE","CLE17","PyramidRefresh17",
 "Saipan","Saipan15B","Kapan","ViperPlusVIP","ViperMinusVIP","Corbett","Ampere","Python","Python10","Python11","Mimas","Mimas15","Mimas17","MimasTDR","PyramidRefresh15","P15_CISS","Pyramid",
-"Pyramid15","PyramidPlus","Gemstone","SPDOfficejetProAsize","SPDOfficejetProBsize","OJ7000","OJProKx50","PSP100","PSP470","Peaks_mod-mech","Athena-L"] 
+"Pyramid15","PyramidPlus","Gemstone","SPDOfficejetProAsize","SPDOfficejetProBsize","OJ7000","OJProKx50","PSP100","PSP470","Peaks_mod-mech","Athena-L","MimasVictoria"] 
 
 TECH_CLASSES = [
     "Undefined", # This will show an error (and its the default)
@@ -132,7 +132,8 @@ TECH_CLASSES = [
     "Mimas17",
     "P15_CISS",
     "Peaks_mod-mech",
-    "Athena-L"
+    "Athena-L",
+    "MimasVictoria"
     
 ]
 
@@ -427,25 +428,25 @@ class ModelData:
             }
 
         self.RE_FIELD_TYPES = {
-            re.compile('^r(\d+)-agent(\d+)-kind', re.IGNORECASE) : TYPE_INT,
-            re.compile('^r(\d+)-agent(\d+)-type', re.IGNORECASE) : TYPE_INT,
-            re.compile('^r(\d+)-agent(\d+)-sku', re.IGNORECASE) : TYPE_STR,
-            re.compile('^agent(\d+)-desc', re.IGNORECASE) : TYPE_STR,
-            re.compile('^agent(\d+)-virgin', re.IGNORECASE) : TYPE_BOOL,
-            re.compile('^agent(\d+)-dvc', re.IGNORECASE) : TYPE_INT,
-            re.compile('^agent(\d+)-kind', re.IGNORECASE) : TYPE_INT,
-            re.compile('^agent(\d+)-type', re.IGNORECASE) : TYPE_INT,
-            re.compile('^agent(\d+)-id', re.IGNORECASE) : TYPE_INT,
-            re.compile('^agent(\d+)-hp-ink', re.IGNORECASE) : TYPE_BOOL,
-            re.compile('^agent(\d+)-health-desc', re.IGNORECASE) : TYPE_STR,
-            re.compile('^agent(\d+)-health$', re.IGNORECASE) : TYPE_INT,
-            re.compile('^agent(\d+)-known', re.IGNORECASE) : TYPE_BOOL,
-            re.compile('^agent(\d+)-level', re.IGNORECASE) : TYPE_INT,
-            re.compile('^agent(\d+)-ack', re.IGNORECASE) : TYPE_BOOL,
-            re.compile('^agent(\d+)-sku', re.IGNORECASE) : TYPE_STR,
-            re.compile('^in-tray(\d+)', re.IGNORECASE) : TYPE_BOOL,
-            re.compile('^out-tray(\d+)', re.IGNORECASE) : TYPE_BOOL,
-            re.compile('^model(\d+)', re.IGNORECASE) : TYPE_STR,
+            re.compile(r'^r(\d+)-agent(\d+)-kind', re.IGNORECASE) : TYPE_INT,
+            re.compile(r'^r(\d+)-agent(\d+)-type', re.IGNORECASE) : TYPE_INT,
+            re.compile(r'^r(\d+)-agent(\d+)-sku', re.IGNORECASE) : TYPE_STR,
+            re.compile(r'^agent(\d+)-desc', re.IGNORECASE) : TYPE_STR,
+            re.compile(r'^agent(\d+)-virgin', re.IGNORECASE) : TYPE_BOOL,
+            re.compile(r'^agent(\d+)-dvc', re.IGNORECASE) : TYPE_INT,
+            re.compile(r'^agent(\d+)-kind', re.IGNORECASE) : TYPE_INT,
+            re.compile(r'^agent(\d+)-type', re.IGNORECASE) : TYPE_INT,
+            re.compile(r'^agent(\d+)-id', re.IGNORECASE) : TYPE_INT,
+            re.compile(r'^agent(\d+)-hp-ink', re.IGNORECASE) : TYPE_BOOL,
+            re.compile(r'^agent(\d+)-health-desc', re.IGNORECASE) : TYPE_STR,
+            re.compile(r'^agent(\d+)-health$', re.IGNORECASE) : TYPE_INT,
+            re.compile(r'^agent(\d+)-known', re.IGNORECASE) : TYPE_BOOL,
+            re.compile(r'^agent(\d+)-level', re.IGNORECASE) : TYPE_INT,
+            re.compile(r'^agent(\d+)-ack', re.IGNORECASE) : TYPE_BOOL,
+            re.compile(r'^agent(\d+)-sku', re.IGNORECASE) : TYPE_STR,
+            re.compile(r'^in-tray(\d+)', re.IGNORECASE) : TYPE_BOOL,
+            re.compile(r'^out-tray(\d+)', re.IGNORECASE) : TYPE_BOOL,
+            re.compile(r'^model(\d+)', re.IGNORECASE) : TYPE_STR,
             }
 
         self.TYPE_CACHE = {}
@@ -570,6 +571,24 @@ class ModelData:
 
             if self.read_section(self.released_dat, model):
                 return self.__cache[model]
+            else:
+                hp_model = "hp_"+model
+                if self.read_section(self.released_dat, hp_model):
+                    return self.__cache[hp_model]
+                else:
+                    log.debug("%s model not found"%hp_model)
+
+            if self.unreleased_dat is not None and os.path.exists(self.unreleased_dat):
+                log.debug("Reading file: %s" % self.unreleased_dat)
+
+                if self.read_section(self.unreleased_dat, model):
+                    return self.__cache[model]
+                else:
+                    hp_model = "hp_"+model
+                    if self.read_section(self.released_dat, hp_model):
+                        return self.__cache[hp_model]
+                    else:
+                        log.debug("%s model not found"%hp_model)
 
             if self.unreleased_dat is not None and os.path.exists(self.unreleased_dat):
                 log.debug("Reading file: %s" % self.unreleased_dat)

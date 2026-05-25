@@ -29,6 +29,8 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  scan/sane/soapht.c            | 20 ++++++++++----------
  23 files changed, 90 insertions(+), 58 deletions(-)
 
+diff --git a/Makefile.am b/Makefile.am
+index 99e1839..fd3df8f 100644
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -3,7 +3,7 @@
@@ -40,8 +42,8 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  CFLAGS+= -DCONFDIR=\"$(hplip_confdir)\"
  CXXFLAGS+= -DCONFDIR=\"$(hplip_confdir)\"
  
-@@ -309,7 +309,7 @@
- pcardextdir = $(pyexecdir)
+@@ -310,7 +310,7 @@ pcardextdir = $(PYTHONEXECDIR)
+ pcardextdir = $(PYTHONEXECDIR)
  pcardext_LTLIBRARIES = pcardext.la
  pcardext_la_LDFLAGS = -module -avoid-version -lpython$(PYTHON_VERSION)m
 -pcardext_la_SOURCES = pcard/pcardext/pcardext.c pcard/fat.c
@@ -49,7 +51,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  pcardext_la_CFLAGS = -I$(PYTHONINCLUDEDIR)
  
  # prnt
-@@ -321,7 +321,7 @@
+@@ -322,7 +322,7 @@ lib_LTLIBRARIES += libhpipp.la
  #hpipp_LTLIBRARIES = hpipp.la
  #hpipp_la_LDFLAGS = -module -avoid-version
  libhpipp_la_SOURCES = protocol/hp_ipp.c protocol/hp_ipp.h protocol/hp_ipp_i.h
@@ -58,6 +60,8 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  libhpipp_la_LDFLAGS = -version-info 0:1:0
  libhpipp_la_LIBADD = -lcups libhpmud.la
  
+diff --git a/common/utils.c b/common/utils.c
+index 8e77bb4..8cdab0a 100644
 --- a/common/utils.c
 +++ b/common/utils.c
 @@ -1,5 +1,9 @@
@@ -71,9 +75,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  #include <dlfcn.h>
  #include <sys/stat.h>
  #include <errno.h>
+diff --git a/io/hpmud/hpmud.c b/io/hpmud/hpmud.c
+index 7063487..7a9b92b 100644
 --- a/io/hpmud/hpmud.c
 +++ b/io/hpmud/hpmud.c
-@@ -767,6 +767,7 @@
+@@ -769,6 +769,7 @@ enum HPMUD_RESULT hpmud_get_dstat(HPMUD_DEVICE dd, struct hpmud_dstat *ds)
     }
  
     strncpy(ds->uri, msp->device[dd].uri, sizeof(ds->uri));
@@ -81,6 +87,8 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
     ds->io_mode = msp->device[dd].io_mode;
     ds->channel_cnt = msp->device[dd].channel_cnt;
     ds->mlc_up = msp->device[dd].mlc_up;
+diff --git a/io/hpmud/jd.c b/io/hpmud/jd.c
+index 94474c8..f86f96a 100644
 --- a/io/hpmud/jd.c
 +++ b/io/hpmud/jd.c
 @@ -31,6 +31,7 @@
@@ -91,9 +99,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  #include "hpmud.h"
  #include "hpmudi.h"
  
+diff --git a/io/hpmud/model.c b/io/hpmud/model.c
+index 4ea8990..a917d69 100644
 --- a/io/hpmud/model.c
 +++ b/io/hpmud/model.c
-@@ -117,6 +117,7 @@
+@@ -117,6 +117,7 @@ static int ReadConfig()
        if (rcbuf[0] == '[')
        {
           strncpy(section, rcbuf, sizeof(section)); /* found new section */
@@ -101,7 +111,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
           continue;
        }
  
-@@ -125,6 +126,7 @@
+@@ -125,6 +126,7 @@ static int ReadConfig()
        if ((strncasecmp(section, "[dirs]", 6) == 0) && (strcasecmp(key, "home") == 0))
        {
           strncpy(homedir, value, sizeof(homedir));
@@ -109,9 +119,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
           break;  /* done */
        }
     }
+diff --git a/io/hpmud/musb.c b/io/hpmud/musb.c
+index 57c212f..ea8be2b 100644
 --- a/io/hpmud/musb.c
 +++ b/io/hpmud/musb.c
-@@ -777,7 +777,7 @@
+@@ -777,7 +777,7 @@ static int device_id(int fd, unsigned char *buffer, int size)
          len = size-1;   /* leave byte for zero termination */
      if (len > 2)
          len -= 2;
@@ -120,9 +132,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
      buffer[len]=0;
      DBG("read actual device_id successfully fd=%d len=%d\n", fd, len);
  
+diff --git a/io/hpmud/pp.c b/io/hpmud/pp.c
+index 74c5fdc..021d627 100644
 --- a/io/hpmud/pp.c
 +++ b/io/hpmud/pp.c
-@@ -632,7 +632,7 @@
+@@ -632,7 +632,7 @@ static int device_id(int fd, char *buffer, int size)
        len = size-1;   /* leave byte for zero termination */
     if (len > 2)
        len -= 2;
@@ -131,9 +145,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
     buffer[len]=0;
  
     DBG("read actual device_id successfully fd=%d len=%d\n", fd, len);
+diff --git a/pcard/fat.c b/pcard/fat.c
+index caa383f..e1425c0 100644
 --- a/pcard/fat.c
 +++ b/pcard/fat.c
-@@ -519,14 +519,17 @@
+@@ -519,14 +519,17 @@ int FatFreeSpace(void)
  
  int FatDiskAttributes( PHOTO_CARD_ATTRIBUTES * pa )
  {
@@ -154,7 +170,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
      pa->WriteProtect = da.WriteProtect;
      
      return 0;
-@@ -741,6 +744,7 @@
+@@ -741,6 +744,7 @@ int FatSetCWD(char *dir)
        return 1;
  
     strncpy(cwd.Name, fa.Name, sizeof(cwd.Name));
@@ -162,9 +178,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
     cwd.StartSector = ConvertClusterToSector(fa.StartCluster);
     cwd.CurrSector = cwd.StartSector;
     cwd.StartCluster = fa.StartCluster;
+diff --git a/prnt/hpcups/genPCLm.cpp b/prnt/hpcups/genPCLm.cpp
+index 0e1650c..f81b552 100644
 --- a/prnt/hpcups/genPCLm.cpp
 +++ b/prnt/hpcups/genPCLm.cpp
-@@ -1241,11 +1241,16 @@
+@@ -1242,11 +1242,16 @@ void PCLmGenerator::writeJobTicket()
  	char orientation[256];
  	char duplex[256];
  	char colorthemes[256];
@@ -186,7 +204,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  
  	snprintf(pOutStr,OUT_STR_SIZE,"%%  genPCLm (Ver: %f)\n",PCLM_Ver); writeStr2OutBuff(pOutStr);
  	snprintf(pOutStr,OUT_STR_SIZE,"%%============= Job Ticket =============\n"); writeStr2OutBuff(pOutStr);
-@@ -1639,7 +1644,10 @@
+@@ -1640,7 +1645,10 @@ int  PCLmGenerator::StartPage(PCLmPageSetup *PCLmPageContent, void **pOutBuffer,
  	}
  
  	if(strlen(PCLmPageContent->mediaSizeName))
@@ -198,9 +216,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  
  	currStripHeight=PCLmPageContent->stripHeight;
  	if(!currStripHeight)
+diff --git a/prnt/hpijs/context2.cpp b/prnt/hpijs/context2.cpp
+index c3df482..19490b1 100644
 --- a/prnt/hpijs/context2.cpp
 +++ b/prnt/hpijs/context2.cpp
-@@ -1302,6 +1302,7 @@
+@@ -1302,6 +1302,7 @@ DRIVER_ERROR PrintContext::SelectDevice
  	if(0 == strnlen((const char *)pSS->strDevID, DevIDBuffSize))
  	{
  		strncpy((char *)pSS->strDevID,szDeviceId,DevIDBuffSize);
@@ -208,9 +228,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  	}
      thePrinter = pPFI->CreatePrinter (pSS, familyHandle);
      if (thePrinter->constructor_error != NO_ERROR)
+diff --git a/prnt/hpijs/systemservices.cpp b/prnt/hpijs/systemservices.cpp
+index 95f5a64..f5b4bb5 100644
 --- a/prnt/hpijs/systemservices.cpp
 +++ b/prnt/hpijs/systemservices.cpp
-@@ -396,7 +396,10 @@
+@@ -396,7 +396,10 @@ void SystemServices::AdjustIO(IO_MODE IM, const char* model)
      IOMode.bDevID =IM.bDevID  && IOMode.bDevID;
  
      if (model)
@@ -221,9 +243,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  }
  
  APDK_END_NAMESPACE
+diff --git a/prnt/hpps/hppsfilter.c b/prnt/hpps/hppsfilter.c
+index 5a2dc89..876135b 100644
 --- a/prnt/hpps/hppsfilter.c
 +++ b/prnt/hpps/hppsfilter.c
-@@ -329,13 +329,13 @@
+@@ -332,13 +332,13 @@ static void WriteHeader(char **argument)
      /*		Writing Header Information
      argument[1] = JOB ID , argument[2]= USERNAME,  argument[3] = TITLE		*/
      hpwrite("\x1b%-12345X@PJL JOBNAME=", strlen("\x1b%-12345X@PJL JOBNAME="));
@@ -240,9 +264,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
      hpwrite(buffer, strlen(buffer));
      fprintf(stderr, "HP PS filter func = WriteHeader           : WRITING PJL HEADER INFO\n");
      return;
+diff --git a/protocol/hp_ipp.h b/protocol/hp_ipp.h
+index 032be9a..b72f749 100644
 --- a/protocol/hp_ipp.h
 +++ b/protocol/hp_ipp.h
-@@ -168,6 +168,11 @@
+@@ -168,6 +168,11 @@ HPIPP_RESULT parseResponseHeader(char* header, int *content_length, int *chunked
  HPIPP_RESULT prepend_http_header(raw_ipp *raw_request,const char *resource);
  enum HPMUD_RESULT sendUSBRequest(char *buf, int size, raw_ipp *responseptr, char * device_uri);
  enum HPMUD_RESULT sendUSBFileRequest(char *buf, int size, int fileHandle,raw_ipp *responseptr, char *device_uri);
@@ -254,6 +280,8 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  
  ipp_t * createFaxDetailRequest(const char *printer_name);
  ipp_t * getDeviceFaxModemAttributes(char* device_uri,char* printer_name, int *count);
+diff --git a/scan/sane/bb_ledm.c b/scan/sane/bb_ledm.c
+index 168a6ab..4bdb304 100644
 --- a/scan/sane/bb_ledm.c
 +++ b/scan/sane/bb_ledm.c
 @@ -26,6 +26,7 @@
@@ -264,6 +292,8 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  
  # include <stdint.h>
  
+diff --git a/scan/sane/common.h b/scan/sane/common.h
+index cdddd94..062d3a4 100644
 --- a/scan/sane/common.h
 +++ b/scan/sane/common.h
 @@ -36,7 +36,7 @@
@@ -275,9 +305,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  #define BUG_DUMP(data, size) bugdump((data), (size))
  #define BUG_SZ(args...) {syslog(LOG_ERR, args); DBG(2, args);}
  
+diff --git a/scan/sane/escl.c b/scan/sane/escl.c
+index 557b844..9fbbcaf 100644
 --- a/scan/sane/escl.c
 +++ b/scan/sane/escl.c
-@@ -849,7 +849,7 @@
+@@ -849,7 +849,7 @@ SANE_Status escl_control_option(SANE_Handle handle, SANE_Int option, SANE_Action
    //DBG8("escl_control_option (option=%s) action=%d\n", ps->option[option].name, action);
    if (stat != SANE_STATUS_GOOD)
    {
@@ -286,7 +318,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
    }
  
     return stat;
-@@ -1159,7 +1159,7 @@
+@@ -1159,7 +1159,7 @@ void escl_close(SANE_Handle handle)
  
    if (ps == NULL || ps != session)
    {
@@ -295,6 +327,8 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
      return;
    }
  
+diff --git a/scan/sane/http.c b/scan/sane/http.c
+index 5dc10e3..9a9610d 100644
 --- a/scan/sane/http.c
 +++ b/scan/sane/http.c
 @@ -36,6 +36,7 @@
@@ -305,9 +339,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  #include "hpmud.h"
  #include "http.h"
  
+diff --git a/scan/sane/io.c b/scan/sane/io.c
+index 4508458..dbbb296 100755
 --- a/scan/sane/io.c
 +++ b/scan/sane/io.c
-@@ -50,7 +50,7 @@
+@@ -50,7 +50,7 @@ int __attribute__ ((visibility ("hidden"))) InitDbus(void)
      
     if (dbus_error_is_set(&dbus_err))
     { 
@@ -316,7 +352,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        dbus_error_free(&dbus_err); 
     }
  
-@@ -79,7 +79,7 @@
+@@ -79,7 +79,7 @@ int __attribute__ ((visibility ("hidden"))) SendScanEvent(char *device_uri, int
  
      if (NULL == msg)
      {
@@ -325,7 +361,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
          return 0;
      }
  
-@@ -94,7 +94,7 @@
+@@ -94,7 +94,7 @@ int __attribute__ ((visibility ("hidden"))) SendScanEvent(char *device_uri, int
  
      if (!dbus_connection_send(dbus_conn, msg, NULL))
      {
@@ -334,9 +370,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
          return 0;
      }
  
+diff --git a/scan/sane/ledm.c b/scan/sane/ledm.c
+index a56f534..a594008 100644
 --- a/scan/sane/ledm.c
 +++ b/scan/sane/ledm.c
-@@ -813,7 +813,7 @@
+@@ -813,7 +813,7 @@ SANE_Status ledm_control_option(SANE_Handle handle, SANE_Int option, SANE_Action
  
    if (stat != SANE_STATUS_GOOD)
    {
@@ -345,7 +383,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
    }
  
     return stat;
-@@ -1080,7 +1080,7 @@
+@@ -1080,7 +1080,7 @@ void ledm_close(SANE_Handle handle)
  
    if (ps == NULL || ps != session)
    {
@@ -354,9 +392,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
      return;
    }
  
+diff --git a/scan/sane/marvell.c b/scan/sane/marvell.c
+index 6cac67a..fce2458 100644
 --- a/scan/sane/marvell.c
 +++ b/scan/sane/marvell.c
-@@ -134,7 +134,7 @@
+@@ -134,7 +134,7 @@ static int get_ip_data(struct marvell_session *ps, SANE_Byte *data, SANE_Int max
  
     if (!ps->ip_handle)
     {
@@ -365,7 +405,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        goto bugout;
     }
     
-@@ -335,7 +335,7 @@
+@@ -335,7 +335,7 @@ static struct marvell_session *create_session()
  
     if ((ps = malloc(sizeof(struct marvell_session))) == NULL)
     {
@@ -374,7 +414,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return NULL;
     }
     memset(ps, 0, sizeof(struct marvell_session));
-@@ -402,7 +402,7 @@
+@@ -402,7 +402,7 @@ SANE_Status marvell_open(SANE_String_Const device, SANE_Handle *handle)
  
     if (session)
     {
@@ -383,7 +423,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return SANE_STATUS_DEVICE_BUSY;
     }
        
-@@ -431,7 +431,7 @@
+@@ -431,7 +431,7 @@ SANE_Status marvell_open(SANE_String_Const device, SANE_Handle *handle)
  
     if (hpmud_open_device(session->uri, ma.mfp_mode, &session->dd) != HPMUD_R_OK)
     {
@@ -392,7 +432,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        goto bugout;
  
        free(session);
-@@ -441,7 +441,7 @@
+@@ -441,7 +441,7 @@ SANE_Status marvell_open(SANE_String_Const device, SANE_Handle *handle)
  
     if (hpmud_open_channel(session->dd, HPMUD_S_MARVELL_SCAN_CHANNEL, &session->cd) != HPMUD_R_OK)
     {
@@ -401,7 +441,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        stat = SANE_STATUS_DEVICE_BUSY;
        goto bugout;
     }
-@@ -554,7 +554,7 @@
+@@ -554,7 +554,7 @@ void marvell_close(SANE_Handle handle)
  
     if (ps == NULL || ps != session)
     {
@@ -410,7 +450,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return;
     }
  
-@@ -849,7 +849,7 @@
+@@ -849,7 +849,7 @@ SANE_Status marvell_control_option(SANE_Handle handle, SANE_Int option, SANE_Act
                 stat = SANE_STATUS_GOOD;
                 break;
              }
@@ -419,7 +459,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
           }
           else
           {  /* Set default. */
-@@ -866,7 +866,7 @@
+@@ -866,7 +866,7 @@ SANE_Status marvell_control_option(SANE_Handle handle, SANE_Int option, SANE_Act
  
     if (stat != SANE_STATUS_GOOD)
     {
@@ -428,7 +468,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
                    action==SANE_ACTION_GET_VALUE ? "get" : action==SANE_ACTION_SET_VALUE ? "set" : "auto");
     }
  
-@@ -905,7 +905,7 @@
+@@ -905,7 +905,7 @@ SANE_Status marvell_start(SANE_Handle handle)
     
     if (set_extents(ps))
     {
@@ -437,7 +477,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
           ps->currentTlx, ps->currentTly, ps->currentBrx, ps->currentBry, ps->min_width, ps->min_height, ps->tlxRange.max, ps->tlyRange.max);
        stat = SANE_STATUS_INVAL;
        goto bugout;
-@@ -963,7 +963,7 @@
+@@ -963,7 +963,7 @@ SANE_Status marvell_start(SANE_Handle handle)
     /* Open image processor. */
     if ((ret = ipOpen(pXform-xforms, xforms, 0, &ps->ip_handle)) != IP_DONE)
     {
@@ -446,7 +486,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        stat = SANE_STATUS_INVAL;
        goto bugout;
     }
-@@ -1023,7 +1023,7 @@
+@@ -1023,7 +1023,7 @@ SANE_Status marvell_read(SANE_Handle handle, SANE_Byte *data, SANE_Int maxLength
  
     if(ret & (IP_INPUT_ERROR | IP_FATAL_ERROR))
     {
@@ -455,6 +495,8 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        goto bugout;
     }
  
+diff --git a/scan/sane/sclpml.c b/scan/sane/sclpml.c
+index 61500da..dfeedb9 100644
 --- a/scan/sane/sclpml.c
 +++ b/scan/sane/sclpml.c
 @@ -30,6 +30,7 @@
@@ -465,7 +507,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
  #include "sane.h"
  #include "saneopts.h"
  #include "common.h"
-@@ -2087,7 +2088,7 @@
+@@ -2087,7 +2088,7 @@ void sclpml_close(SANE_Handle handle)
      DBG(8, "sane_hpaio_close(): %s %d\n", __FILE__, __LINE__); 
      if (hpaio == NULL || hpaio != session)
      {
@@ -474,9 +516,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return;
       }
  
+diff --git a/scan/sane/soap.c b/scan/sane/soap.c
+index a45f1a0..e59fb46 100644
 --- a/scan/sane/soap.c
 +++ b/scan/sane/soap.c
-@@ -142,7 +142,7 @@
+@@ -142,7 +142,7 @@ static int get_ip_data(struct soap_session *ps, SANE_Byte *data, SANE_Int maxLen
  
     if (!ps->ip_handle)
     {
@@ -485,7 +529,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        goto bugout;
     }      
  
-@@ -219,7 +219,7 @@
+@@ -219,7 +219,7 @@ static struct soap_session *create_session()
  
     if ((ps = malloc(sizeof(struct soap_session))) == NULL)
     {
@@ -494,7 +538,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return NULL;
     }
     memset(ps, 0, sizeof(struct soap_session));
-@@ -418,7 +418,7 @@
+@@ -418,7 +418,7 @@ SANE_Status soap_open(SANE_String_Const device, SANE_Handle *handle)
  
     if (session)
     {
@@ -503,7 +547,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return SANE_STATUS_DEVICE_BUSY;
     }
  
-@@ -434,7 +434,7 @@
+@@ -434,7 +434,7 @@ SANE_Status soap_open(SANE_String_Const device, SANE_Handle *handle)
  
     if (hpmud_open_device(session->uri, ma.mfp_mode, &session->dd) != HPMUD_R_OK)
     {
@@ -512,7 +556,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        goto bugout;
  
        free(session);
-@@ -519,7 +519,7 @@
+@@ -519,7 +519,7 @@ void soap_close(SANE_Handle handle)
  
     if (ps == NULL || ps != session)
     {
@@ -521,7 +565,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return;
     }
  
-@@ -824,7 +824,7 @@
+@@ -824,7 +824,7 @@ SANE_Status soap_control_option(SANE_Handle handle, SANE_Int option, SANE_Action
  
     if (stat != SANE_STATUS_GOOD)
     {
@@ -530,7 +574,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
                    action==SANE_ACTION_GET_VALUE ? "get" : action==SANE_ACTION_SET_VALUE ? "set" : "auto");
     }
  
-@@ -862,7 +862,7 @@
+@@ -862,7 +862,7 @@ SANE_Status soap_start(SANE_Handle handle)
     ps->user_cancel = 0;
     if (set_extents(ps))
     {
@@ -539,7 +583,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
           ps->currentTlx, ps->currentTly, ps->currentBrx, ps->currentBry, ps->min_width, ps->min_height, ps->tlxRange.max, ps->tlyRange.max);
        stat = SANE_STATUS_INVAL;
        goto bugout;
-@@ -913,7 +913,7 @@
+@@ -913,7 +913,7 @@ SANE_Status soap_start(SANE_Handle handle)
     /* Open image processor. */
     if ((ret = ipOpen(pXform-xforms, xforms, 0, &ps->ip_handle)) != IP_DONE)
     {
@@ -548,7 +592,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        stat = SANE_STATUS_INVAL;
        goto bugout;
     }
-@@ -955,7 +955,7 @@
+@@ -955,7 +955,7 @@ SANE_Status soap_start(SANE_Handle handle)
  
           if (ret & (IP_INPUT_ERROR | IP_FATAL_ERROR | IP_DONE))
           {
@@ -557,7 +601,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
              stat = SANE_STATUS_IO_ERROR;
              goto bugout;
           }
-@@ -1007,7 +1007,7 @@
+@@ -1007,7 +1007,7 @@ SANE_Status soap_read(SANE_Handle handle, SANE_Byte *data, SANE_Int maxLength, S
  
     if(ret & (IP_INPUT_ERROR | IP_FATAL_ERROR))
     {
@@ -566,9 +610,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        goto bugout;
     }
  
+diff --git a/scan/sane/soapht.c b/scan/sane/soapht.c
+index df0e807..c8de979 100644
 --- a/scan/sane/soapht.c
 +++ b/scan/sane/soapht.c
-@@ -136,7 +136,7 @@
+@@ -136,7 +136,7 @@ static int get_ip_data(struct soap_session *ps, SANE_Byte *data, SANE_Int maxLen
  
     if (!ps->ip_handle)
     {
@@ -577,7 +623,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        goto bugout;
     }      
  
-@@ -435,7 +435,7 @@
+@@ -435,7 +435,7 @@ static struct soap_session *create_session()
  
     if ((ps = malloc(sizeof(struct soap_session))) == NULL)
     {
@@ -586,7 +632,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return NULL;
     }
     memset(ps, 0, sizeof(struct soap_session));
-@@ -459,7 +459,7 @@
+@@ -459,7 +459,7 @@ SANE_Status soapht_open(SANE_String_Const device, SANE_Handle *handle)
  
     if (session)
     {
@@ -595,7 +641,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return SANE_STATUS_DEVICE_BUSY;
     }
  
-@@ -475,7 +475,7 @@
+@@ -475,7 +475,7 @@ SANE_Status soapht_open(SANE_String_Const device, SANE_Handle *handle)
  
     if (hpmud_open_device(session->uri, ma.mfp_mode, &session->dd) != HPMUD_R_OK)
     {
@@ -604,7 +650,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        goto bugout;
  
        free(session);
-@@ -554,7 +554,7 @@
+@@ -554,7 +554,7 @@ void soapht_close(SANE_Handle handle)
  
     if (ps == NULL || ps != session)
     {
@@ -613,7 +659,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        return;
     }
  
-@@ -904,7 +904,7 @@
+@@ -904,7 +904,7 @@ SANE_Status soapht_control_option(SANE_Handle handle, SANE_Int option, SANE_Acti
  
     if (stat != SANE_STATUS_GOOD)
     {
@@ -622,7 +668,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
                    action==SANE_ACTION_GET_VALUE ? "get" : action==SANE_ACTION_SET_VALUE ? "set" : "auto");
     }
  
-@@ -946,7 +946,7 @@
+@@ -946,7 +946,7 @@ SANE_Status soapht_start(SANE_Handle handle)
    
     if (set_extents(ps))
     {
@@ -631,7 +677,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
           ps->currentTlx, ps->currentTly, ps->currentBrx, ps->currentBry, ps->min_width, ps->min_height, ps->tlxRange.max, ps->tlyRange.max);
        stat = SANE_STATUS_INVAL;
        goto bugout;
-@@ -1032,7 +1032,7 @@
+@@ -1032,7 +1032,7 @@ SANE_Status soapht_start(SANE_Handle handle)
     /* Open image processor. */
     if ((ret = ipOpen(pXform-xforms, xforms, 0, &ps->ip_handle)) != IP_DONE)
     {
@@ -640,7 +686,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
        stat = SANE_STATUS_INVAL;
        goto bugout;
     }
-@@ -1075,7 +1075,7 @@
+@@ -1075,7 +1075,7 @@ SANE_Status soapht_start(SANE_Handle handle)
  
           if (ret & (IP_INPUT_ERROR | IP_FATAL_ERROR | IP_DONE))
           {
@@ -649,7 +695,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-covscan.pat
              stat = SANE_STATUS_IO_ERROR;
              goto bugout;
           }
-@@ -1124,7 +1124,7 @@
+@@ -1124,7 +1124,7 @@ SANE_Status soapht_read(SANE_Handle handle, SANE_Byte *data, SANE_Int maxLength,
  
     if(ret & (IP_INPUT_ERROR | IP_FATAL_ERROR))
     {

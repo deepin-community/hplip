@@ -12,9 +12,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-error-print
  ui5/wifisetupdialog.py | 4 ++--
  4 files changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/clean.py b/clean.py
+index 3d41f04..3a7248e 100755
 --- a/clean.py
 +++ b/clean.py
-@@ -182,7 +182,7 @@
+@@ -182,7 +182,7 @@ try:
                          log.error("Cleaning not needed or supported on this device.")
  
                  except Error as e:
@@ -23,9 +25,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-error-print
  
              else:
                  log.error("Device is busy or in an error state. Please check device and try again.")
+diff --git a/ui/scrollunload.py b/ui/scrollunload.py
+index fdb48e8..345ed82 100644
 --- a/ui/scrollunload.py
 +++ b/ui/scrollunload.py
-@@ -120,7 +120,7 @@
+@@ -120,7 +120,7 @@ class ScrollUnloadView(ScrollView):
                  self.pc = photocard.PhotoCard(None, self.cur_device.device_uri, self.cur_printer)
              except Error as e:
                  QApplication.restoreOverrideCursor()
@@ -34,9 +38,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-error-print
                  self.cleanup(EVENT_PCARD_UNABLE_TO_MOUNT)
                  return False
  
+diff --git a/ui4/wifisetupdialog.py b/ui4/wifisetupdialog.py
+index 2eff1a6..7f4c8d5 100644
 --- a/ui4/wifisetupdialog.py
 +++ b/ui4/wifisetupdialog.py
-@@ -329,7 +329,7 @@
+@@ -329,7 +329,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
              try:
                  self.dev = device.Device(self.device_uri)
              except Error as e:
@@ -45,7 +51,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-error-print
  
                  if self.dev is not None:
                      self.dev.close()
-@@ -929,7 +929,7 @@
+@@ -933,7 +933,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
  
  
      def showIOError(self, e):
@@ -54,9 +60,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-error-print
  
          if self.dev is not None:
              self.dev.close()
+diff --git a/ui5/wifisetupdialog.py b/ui5/wifisetupdialog.py
+index 70222d8..874822e 100644
 --- a/ui5/wifisetupdialog.py
 +++ b/ui5/wifisetupdialog.py
-@@ -334,7 +334,7 @@
+@@ -334,7 +334,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
              try:
                  self.dev = device.Device(self.device_uri)
              except Error as e:
@@ -65,7 +73,7 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-error-print
  
                  if self.dev is not None:
                      self.dev.close()
-@@ -941,7 +941,7 @@
+@@ -941,7 +941,7 @@ class WifiSetupDialog(QDialog, Ui_Dialog):
  
  
      def showIOError(self, e):

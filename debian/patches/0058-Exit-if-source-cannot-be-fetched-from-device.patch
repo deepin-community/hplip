@@ -7,9 +7,11 @@ Origin: https://src.fedoraproject.org/rpms/hplip/blob/master/f/hplip-3165-source
  scan.py | 1 +
  1 file changed, 1 insertion(+)
 
+diff --git a/scan.py b/scan.py
+index a347749..b0e78e3 100755
 --- a/scan.py
 +++ b/scan.py
-@@ -989,6 +989,7 @@
+@@ -1031,6 +1031,7 @@ try:
                  sys.exit(1)
          except:
              log.error("Failed to get the source from device.")
