@@ -1,3 +1,10 @@
+hplip (3.26.4+dfsg0-1deepin2) unstable; urgency=medium
+
+  * Declare Breaks&Replaces against printer-driver-hpcups (<<
+    3.26.4+dfsg0-1~)
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Thu, 09 Jul 2026 13:57:05 +0800
+
 hplip (3.26.4+dfsg0-1deepin1) unstable; urgency=medium
 
   * Apply previous changes:

@@ -68,6 +68,10 @@ Suggests:
  hplip-gui,
  python3-notify2,
  system-config-printer,
+Breaks:
+ printer-driver-hpcups (<< 3.26.4+dfsg0-1~)
+Replaces:
+ printer-driver-hpcups (<< 3.26.4+dfsg0-1~)
 Description: HP Linux Printing and Imaging System (HPLIP)
  The HP Linux Printing and Imaging System provides full support for
  printing on most HP SFP (single function peripheral) inkjets and many
